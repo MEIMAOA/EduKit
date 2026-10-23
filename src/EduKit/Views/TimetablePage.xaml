@@ -1,0 +1,35 @@
+<UserControl x:Class="EduKit.Views.TimetablePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+            <TextBlock Text="课程表" Style="{StaticResource H1}" />
+            <TextBlock Text="直接点击单元格编辑，修改会自动保存；今天所在的列会自动高亮"
+                       Style="{StaticResource Sub}" Margin="0,5,0,0" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,0,0,12">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="保存" Style="{StaticResource BtnPrimarySmall}" Click="Save_Click" />
+                <Button Content="复制今日课程" Style="{StaticResource BtnSmall}" Margin="8,0,0,0"
+                        Click="CopyToday_Click" />
+                <Button Content="清空本表" Style="{StaticResource BtnSubtleSmall}" Margin="8,0,0,0"
+                        Click="Clear_Click" />
+            </StackPanel>
+            <TextBlock x:Name="TodayHint" Text="" Style="{StaticResource Caption}"
+                       HorizontalAlignment="Right" VerticalAlignment="Center" />
+        </Grid>
+
+        <Border Grid.Row="2" Style="{StaticResource Card}" Padding="12">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <Grid x:Name="GridHost" />
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

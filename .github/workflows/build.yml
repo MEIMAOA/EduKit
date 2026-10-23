@@ -1,0 +1,40 @@
+name: build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: 检出源码
+        uses: actions/checkout@v4
+
+      - name: 安装 .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: 还原与编译
+        run: dotnet build EduKit.sln -c Release --nologo
+
+      - name: 自检与截图
+        shell: pwsh
+        run: |
+          $exe = "src/EduKit/bin/Release/EduKit.exe"
+          & $exe --selftest "$PWD/selftest.txt"
+          if (-not (Test-Path "selftest.txt")) { throw "自检未生成报告" }
+          Get-Content "selftest.txt" -Encoding UTF8
+
+      - name: 打包产物
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File ./build.ps1
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: EduKit-win
+          path: dist/EduKit-v1.0.0.zip

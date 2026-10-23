@@ -1,0 +1,27 @@
+# ===== .NET / Visual Studio =====
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.log
+*.pdb
+*.cache
+
+# ===== 构建与发布产物 =====
+dist/
+EduKitData/
+selftest.txt
+render-error.log
+error.log
+
+# ===== 运行时数据 =====
+*.tmp
+*.bak
+
+# ===== 操作系统 =====
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/

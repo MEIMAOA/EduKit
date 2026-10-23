@@ -1,0 +1,117 @@
+<UserControl x:Class="EduKit.Views.SharePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,14">
+            <TextBlock Text="局域网快传" Style="{StaticResource H1}" />
+            <TextBlock Text="手机 / 其他电脑连同一个 Wi-Fi，用浏览器打开地址就能和这台电脑互传文件"
+                       Style="{StaticResource Sub}" Margin="0,5,0,0" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="360" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <Border Style="{StaticResource Card}" Margin="0,0,0,14">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <DockPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="服务状态" Style="{StaticResource SectionTitle}" Margin="0" />
+                                <Border x:Name="StatusChip" Style="{StaticResource Chip}"
+                                        Background="{DynamicResource BgHover}" Margin="12,0,0,0">
+                                    <TextBlock x:Name="StatusText" Text="未启动" FontSize="11"
+                                               Foreground="{DynamicResource TextSecondary}" />
+                                </Border>
+                            </StackPanel>
+                            <Button x:Name="ToggleButton" Content="启动快传" Style="{StaticResource BtnPrimary}"
+                                    HorizontalAlignment="Right" Padding="18,7" Click="Toggle_Click" />
+                        </DockPanel>
+
+                        <Grid Grid.Row="1" Margin="0,16,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="端口" Style="{StaticResource Body}" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="1" x:Name="PortBox" Style="{StaticResource InputBox}"
+                                     Width="120" HorizontalAlignment="Left" />
+                            <Button Grid.Column="2" Content="打开共享文件夹" Style="{StaticResource BtnSmall}"
+                                    Click="OpenFolder_Click" />
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Margin="0,14,0,0">
+                            <TextBlock Text="手机访问地址（点击复制）" Style="{StaticResource Sub}" Margin="0,0,0,8" />
+                            <ItemsControl x:Name="UrlList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource BtnSecondary}" HorizontalAlignment="Left"
+                                                Margin="0,0,0,6" Padding="14,7" Click="CopyUrl_Click">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Path Data="{StaticResource IconShare}" Width="14" Height="14"
+                                                      Stretch="Uniform" Fill="{DynamicResource Accent}"
+                                                      VerticalAlignment="Center" />
+                                                <TextBlock Text="{Binding}" FontSize="12" Margin="8,0,0,0"
+                                                           VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <TextBlock x:Name="HintText"
+                                       Text="提示：首次启动时 Windows 防火墙可能弹出提示，请选择「允许访问」。"
+                                       Style="{StaticResource Caption}" TextWrapping="Wrap" Margin="0,6,0,0" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="使用说明" Style="{StaticResource SectionTitle}" />
+                        <TextBlock Style="{StaticResource Body}" TextWrapping="Wrap" LineHeight="24">
+                            1. 让手机连接电脑所在的同一个 Wi-Fi 或局域网；<LineBreak />
+                            2. 在手机浏览器里打开上方显示的地址；<LineBreak />
+                            3. 网页里可以直接上传文件到电脑，也可以下载电脑共享文件夹里的文件；<LineBreak />
+                            4. 上传的文件会保存在共享文件夹里，可点击「打开共享文件夹」查看。
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <Border Grid.Column="2" Style="{StaticResource Card}">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
+                        <TextBlock Text="传输日志" Style="{StaticResource SectionTitle}" Margin="0" />
+                        <Button Content="清空" Style="{StaticResource BtnSubtleSmall}" HorizontalAlignment="Right"
+                                Click="ClearLog_Click" />
+                    </Grid>
+                    <ListBox x:Name="LogList" Background="{DynamicResource BgCardAlt}"
+                             BorderThickness="0" ItemContainerStyle="{StaticResource PlainListItem}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontSize="11.5" TextWrapping="Wrap"
+                                           Foreground="{DynamicResource TextSecondary}" Margin="6,4" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,103 @@
+<Window x:Class="EduKit.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:EduKit.Controls"
+        Title="电教委工具箱"
+        Icon="Assets/EduKit.ico"
+        Width="1220"
+        Height="800"
+        MinWidth="960"
+        MinHeight="620"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        Background="{DynamicResource BgWindow}"
+        Foreground="{DynamicResource TextPrimary}"
+        FontFamily="{StaticResource AppFont}"
+        TextOptions.TextFormattingMode="Display"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      ResizeBorderThickness="6"
+                      GlassFrameThickness="0"
+                      CornerRadius="0"
+                      UseAeroCaptionButtons="False" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 标题栏 -->
+        <Grid Grid.Row="0" Background="Transparent" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <StackPanel Orientation="Horizontal" Margin="16,0,0,0" VerticalAlignment="Center">
+                <Image Source="Assets/EduKit.ico" Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality" />
+                <TextBlock Text="电教委工具箱" FontSize="13" FontWeight="SemiBold" Margin="10,0,0,0"
+                           VerticalAlignment="Center" />
+                <Border Width="1" Height="12" Background="{DynamicResource BorderBase}" Margin="12,0"
+                        VerticalAlignment="Center" />
+                <TextBlock Text="EduKit" FontSize="11" Foreground="{DynamicResource TextTertiary}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                <controls:IconButton x:Name="ThemeBtn" Style="{StaticResource IconBtn}"
+                                     Icon="{StaticResource IconMoon}" Margin="0,7,4,7"
+                                     Click="Theme_Click" ToolTip="切换深色 / 浅色主题" />
+                <controls:IconButton Style="{StaticResource IconBtn}" Icon="{StaticResource IconGithub}"
+                                     Margin="0,7,10,7" Click="Github_Click" ToolTip="打开 GitHub 开源仓库" />
+                <controls:IconButton x:Name="MinBtn" Style="{StaticResource CaptionBtn}"
+                                     Icon="{StaticResource IconMin}" Click="Min_Click" ToolTip="最小化" />
+                <controls:IconButton x:Name="MaxBtn" Style="{StaticResource CaptionBtn}"
+                                     Icon="{StaticResource IconMax}" Click="Max_Click" ToolTip="最大化" />
+                <controls:IconButton Style="{StaticResource CaptionCloseBtn}"
+                                     Icon="{StaticResource IconClose}" Click="Close_Click" ToolTip="关闭" />
+            </StackPanel>
+        </Grid>
+
+        <!-- 主体 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="216" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="{DynamicResource BgSidebar}"
+                    BorderBrush="{DynamicResource Divider}" BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Bottom" Margin="16,6,16,14">
+                        <TextBlock Text="开源 · MIT License" Style="{StaticResource Caption}" />
+                        <TextBlock Text="Win7 / 10 / 11 兼容" Style="{StaticResource Caption}" Margin="0,3,0,0" />
+                        <TextBlock x:Name="VersionText" Text="v1.0.0" Style="{StaticResource Caption}" Margin="0,3,0,0" />
+                    </StackPanel>
+
+                    <ListBox x:Name="NavList"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             ItemContainerStyle="{StaticResource NavItem}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             SelectionChanged="NavList_SelectionChanged"
+                             Margin="0,8,0,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Data="{Binding Icon}" Width="18" Height="18" Stretch="Uniform"
+                                          VerticalAlignment="Center"
+                                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" />
+                                    <TextBlock Text="{Binding Title}" Margin="12,0,0,0" FontSize="13"
+                                               VerticalAlignment="Center"
+                                               Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <ContentControl x:Name="ContentHost" Grid.Column="1" Margin="24,14,24,20" />
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,118 @@
+<UserControl x:Class="EduKit.Views.PowerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,14">
+            <TextBlock Text="电源管理" Style="{StaticResource H1}" />
+            <TextBlock Text="关机、重启、锁屏、定时关闭教室电脑，下课后不用再等电脑慢慢关"
+                       Style="{StaticResource Sub}" Margin="0,5,0,0" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="立即操作" Style="{StaticResource SectionTitle}" />
+                    <WrapPanel>
+                        <Button Style="{StaticResource TileButton}" Width="208" Height="76" Margin="0,0,10,10"
+                                Click="Shutdown_Click">
+                            <StackPanel>
+                                <TextBlock Text="关机" Style="{StaticResource H3}" Foreground="{DynamicResource Danger}" />
+                                <TextBlock Text="关闭电脑" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource TileButton}" Width="208" Height="76" Margin="0,0,10,10"
+                                Click="Restart_Click">
+                            <StackPanel>
+                                <TextBlock Text="重启" Style="{StaticResource H3}" />
+                                <TextBlock Text="重新启动电脑" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource TileButton}" Width="208" Height="76" Margin="0,0,10,10"
+                                Click="Logoff_Click">
+                            <StackPanel>
+                                <TextBlock Text="注销" Style="{StaticResource H3}" />
+                                <TextBlock Text="退出当前用户" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource TileButton}" Width="208" Height="76" Margin="0,0,10,10"
+                                Click="Sleep_Click">
+                            <StackPanel>
+                                <TextBlock Text="睡眠" Style="{StaticResource H3}" />
+                                <TextBlock Text="低功耗待机" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource TileButton}" Width="208" Height="76" Margin="0,0,10,10"
+                                Click="Lock_Click">
+                            <StackPanel>
+                                <TextBlock Text="锁定" Style="{StaticResource H3}" />
+                                <TextBlock Text="等同 Win + L" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource TileButton}" Width="208" Height="76" Margin="0,0,10,10"
+                                Click="MonitorOff_Click">
+                            <StackPanel>
+                                <TextBlock Text="关闭显示器" Style="{StaticResource H3}" />
+                                <TextBlock Text="省电，不关机" Style="{StaticResource Caption}" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Button>
+                    </WrapPanel>
+                    <TextBlock Text="提示：关机 / 重启前请先保存其他软件里的内容。"
+                               Style="{StaticResource Caption}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="定时任务" Style="{StaticResource SectionTitle}" />
+                    <TextBlock Text="设定多少分钟后自动关机 / 重启（例如下课前 5 分钟设置）"
+                               Style="{StaticResource Sub}" TextWrapping="Wrap" Margin="0,0,0,10" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="MinutesBox" Style="{StaticResource InputBox}" Text="30" />
+                        <TextBlock Grid.Column="1" Text="分钟后" Style="{StaticResource Body}"
+                                   VerticalAlignment="Center" Margin="10,0,0,0" />
+                    </Grid>
+
+                    <WrapPanel Margin="0,10,0,0">
+                        <Button Content="30 分钟" Style="{StaticResource BtnSmall}" Margin="0,0,8,8" Tag="30"
+                                Click="MinutesPreset_Click" />
+                        <Button Content="60 分钟" Style="{StaticResource BtnSmall}" Margin="0,0,8,8" Tag="60"
+                                Click="MinutesPreset_Click" />
+                        <Button Content="120 分钟" Style="{StaticResource BtnSmall}" Margin="0,0,8,8" Tag="120"
+                                Click="MinutesPreset_Click" />
+                    </WrapPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <Button Content="定时关机" Style="{StaticResource BtnPrimarySmall}" Click="ScheduleShutdown_Click" />
+                        <Button Content="定时重启" Style="{StaticResource BtnSmall}" Margin="8,0,0,0"
+                                Click="ScheduleRestart_Click" />
+                        <Button Content="取消定时" Style="{StaticResource BtnSubtleSmall}" Margin="8,0,0,0"
+                                Click="CancelSchedule_Click" />
+                    </StackPanel>
+
+                    <Border Background="{DynamicResource BgCardAlt}" CornerRadius="7" Padding="14,12" Margin="0,16,0,0">
+                        <TextBlock x:Name="StatusText" Text="当前没有定时任务" Style="{StaticResource Body}"
+                                   TextWrapping="Wrap" />
+                    </Border>
+                    <TextBlock Text="定时关机使用系统 shutdown 命令，取消时调用 shutdown /a，普通权限用户同样有效。"
+                               Style="{StaticResource Caption}" TextWrapping="Wrap" Margin="0,10,0,0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

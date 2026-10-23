@@ -1,0 +1,44 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 亮色主题（WinUI / Fluent 风格配色） -->
+    <SolidColorBrush x:Key="BgWindow" Color="#F4F6F9" />
+    <SolidColorBrush x:Key="BgSidebar" Color="#FAFBFC" />
+    <SolidColorBrush x:Key="BgCard" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="BgCardAlt" Color="#F7F9FB" />
+    <SolidColorBrush x:Key="BgHover" Color="#EEF1F5" />
+    <SolidColorBrush x:Key="BgPressed" Color="#E3E8EE" />
+    <SolidColorBrush x:Key="BgSelected" Color="#EAF3FC" />
+    <SolidColorBrush x:Key="NavSelectedBg" Color="#E8F2FC" />
+
+    <SolidColorBrush x:Key="BorderBase" Color="#E6E9EE" />
+    <SolidColorBrush x:Key="BorderStrong" Color="#D3D9E1" />
+    <SolidColorBrush x:Key="Divider" Color="#EDF0F4" />
+
+    <SolidColorBrush x:Key="TextPrimary" Color="#16202B" />
+    <SolidColorBrush x:Key="TextSecondary" Color="#586574" />
+    <SolidColorBrush x:Key="TextTertiary" Color="#8B96A4" />
+    <SolidColorBrush x:Key="TextOnAccent" Color="#FFFFFF" />
+
+    <SolidColorBrush x:Key="Accent" Color="#0F6CBD" />
+    <SolidColorBrush x:Key="AccentHover" Color="#1B7DD1" />
+    <SolidColorBrush x:Key="AccentPressed" Color="#0B5A9E" />
+    <SolidColorBrush x:Key="AccentSoft" Color="#EAF3FC" />
+
+    <SolidColorBrush x:Key="Danger" Color="#C4314B" />
+    <SolidColorBrush x:Key="DangerHover" Color="#D94460" />
+    <SolidColorBrush x:Key="DangerSoft" Color="#FCEDF0" />
+    <SolidColorBrush x:Key="Success" Color="#0F7B32" />
+    <SolidColorBrush x:Key="SuccessSoft" Color="#E9F7EF" />
+    <SolidColorBrush x:Key="Warning" Color="#9D5D00" />
+    <SolidColorBrush x:Key="WarningSoft" Color="#FFF4E0" />
+
+    <SolidColorBrush x:Key="InputBg" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="InputBorder" Color="#D9DFE7" />
+
+    <SolidColorBrush x:Key="ScrollThumb" Color="#C7CDD6" />
+    <SolidColorBrush x:Key="ScrollThumbHover" Color="#AEB6C2" />
+    <SolidColorBrush x:Key="SwitchTrack" Color="#C7CDD6" />
+    <SolidColorBrush x:Key="SwitchKnob" Color="#FFFFFF" />
+
+</ResourceDictionary>
