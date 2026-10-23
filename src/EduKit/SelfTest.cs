@@ -79,12 +79,27 @@ namespace EduKit
                 Check("获取本机 IP", NetUtil.GetLocalIPv4().Count > 0,
                     string.Join(",", NetUtil.GetLocalIPv4()));
 
-                // 5. 显示信息
+                // 5. 显示信息（无图形会话的 CI 环境下跳过）
                 var mode = Native.GetCurrentMode();
-                Check("读取显示模式", mode.dmPelsWidth > 0,
-                    mode.dmPelsWidth + "x" + mode.dmPelsHeight + "@" + mode.dmDisplayFrequency + "Hz");
-                Check("枚举分辨率", Native.GetAvailableModes().Count > 0,
-                    Native.GetAvailableModes().Count + " 种");
+                if (mode.dmPelsWidth > 0)
+                {
+                    Check("读取显示模式", true,
+                        mode.dmPelsWidth + "x" + mode.dmPelsHeight + "@" + mode.dmDisplayFrequency + "Hz");
+                }
+                else
+                {
+                    lines.Add("SKIP  读取显示模式  -> 当前环境没有可用的图形会话");
+                }
+
+                var modeCount = Native.GetAvailableModes().Count;
+                if (modeCount > 0)
+                {
+                    Check("枚举分辨率", true, modeCount + " 种");
+                }
+                else
+                {
+                    lines.Add("SKIP  枚举分辨率  -> 当前环境没有可用的显示模式");
+                }
 
                 // 6. 音频（虚拟机可能没有音频设备，不判为失败）
                 var volume = AudioManager.GetVolume();
