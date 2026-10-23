@@ -8,6 +8,7 @@
 [![.NET](https://img.shields.io/badge/.NET%20Framework-4.6.2%2B-512BD4)](https://dotnet.microsoft.com/download/dotnet-framework)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
+[![Build](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml/badge.svg)](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml)
 
 ![仪表盘](docs/shots/light-dashboard.png)
 
