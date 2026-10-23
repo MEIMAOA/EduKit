@@ -10,13 +10,13 @@ EduKit.exe --selftest .\selftest.txt
 
 退出码 `0` 表示全部通过，非 `0` 表示存在失败项（报告文件中会标明 `FAIL` 行）。
 
-## 最近一次结果（v1.0.0）
+## 最近一次结果（v1.0.1）
 
 测试环境：Windows 11 26200（x86 进程）、.NET Framework 4.8、.NET SDK 10.0.401。
 
 ```text
 EduKit 自检 2026-10-23 21:21:09
-版本 1.0.0，.NET 4.0.30319.42000，x86
+版本 1.0.1，.NET 4.0.30319.42000，x86
 数据目录：<UserProfile>\AppData\Roaming\EduKit（可写：True）
 
 PASS  数据目录可写

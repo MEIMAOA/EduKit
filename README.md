@@ -2,12 +2,12 @@
 
 > 面向班级电教委员（电教委）的 Windows 桌面工具箱：课堂计时、随机点名、课程表、值日轮换、网络诊断、局域网快传、显示与投影、音量控制、电源管理、系统工具、快捷启动。
 >
-> 支持 **Windows 7 SP1 / 8 / 8.1 / 10 / 11**，32 位 / 64 位，UTF-8 中文界面，MIT 开源。
+> 支持 **Windows 7 SP1 / 8 / 8.1 / 10 / 11**，32 位 / 64 位，UTF-8 中文界面，非商业许可开源（PolyForm Noncommercial 1.0.0，禁止商业使用）。
 
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20SP1%2B-0078D4)](#兼容性说明)
 [![.NET](https://img.shields.io/badge/.NET%20Framework-4.6.2%2B-512BD4)](https://dotnet.microsoft.com/download/dotnet-framework)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Release](https://img.shields.io/badge/release-v1.0.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
+[![Release](https://img.shields.io/badge/release-v1.0.1-blue)](https://github.com/MEIMAOA/EduKit/releases)
 [![Build](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml/badge.svg)](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml)
 
 ![仪表盘](docs/shots/light-dashboard.png)
@@ -84,7 +84,7 @@
 
 ### 直接使用
 
-1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.0.0.zip`；
+1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.0.1.zip`；
 2. 解压到任意目录（建议不要放在 `C:\Program Files`，避免权限问题）；
 3. 双击 `EduKit.exe` 运行。
 
@@ -122,11 +122,11 @@ cd EduKit
 # 编译（Debug / Release）
 dotnet build EduKit.sln -c Release
 
-# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.0.0.zip）
+# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.0.1.zip）
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.0.0.zip`。
+构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.0.1.zip`。
 
 ### 自检与截图模式
 
@@ -208,6 +208,12 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 
 ## 更新日志
 
+### v1.0.1（2026-10-23）
+
+- 许可证由 MIT 变更为 **PolyForm Noncommercial 1.0.0**：个人、学生、教师以及学校等非商业组织可免费使用、修改和分发；**禁止任何商业用途**；
+- 软件内「侧栏 / 设置-关于」的开源协议标识同步更新；
+- 商业使用需联系作者获得单独商业授权。
+
 ### v1.0.0（2026-10-23）
 
 - 首个版本：13 个功能模块、亮/暗色主题、Windows 7 兼容；
@@ -216,10 +222,18 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 
 ## English Summary
 
-EduKit is a lightweight Windows toolbox for the class IT/AV committee member ("电教委"). It ships 13 modules: dashboard, class timer, random student picker, timetable, duty rotation, network diagnostics, LAN file sharing (built-in HTTP server), display/projector control, volume control, power management, system utilities and an app launcher. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme (light/dark, rounded cards, vector icons). No third-party packages, MIT licensed.
+EduKit is a lightweight Windows toolbox for the class IT/AV committee member ("电教委"). It ships 13 modules: dashboard, class timer, random student picker, timetable, duty rotation, network diagnostics, LAN file sharing (built-in HTTP server), display/projector control, volume control, power management, system utilities and an app launcher. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme (light/dark, rounded cards, vector icons). No third-party packages. Released under the PolyForm Noncommercial License 1.0.0: free for personal, educational and other noncommercial use, commercial use requires a separate license.
 
 ## 开源协议
 
-[MIT License](LICENSE) © 2026 [MEIMAOA](https://github.com/MEIMAOA)
+本项目采用 **[PolyForm Noncommercial License 1.0.0](LICENSE)**（非商业许可）：
+
+- ✅ **允许**：个人学习、教学、学校 / 公益组织 / 政府机构等**非商业**用途，可自由使用、修改、分发（分发时需保留许可证与 Required Notice 版权声明）；
+- ❌ **禁止**：任何**商业用途**，包括但不限于打包销售、付费分发、增值服务、企业内部商业使用等；
+- 💼 **商业授权**：如需商业使用，请通过 GitHub Issue 或邮箱联系作者，获取单独商业授权。
+
+© 2026 [MEIMAOA](https://github.com/MEIMAOA)
+
+> 说明：v1.0.0 曾以 MIT 协议发布，已经分发的 v1.0.0 副本仍适用 MIT；自 v1.0.1 起采用上述非商业许可。
 
 欢迎 Star、Issue、PR。如果这个工具帮到了你，也欢迎推荐给其他班级的电教委。

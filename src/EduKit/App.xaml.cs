@@ -15,7 +15,7 @@ namespace EduKit
 
         public static MainWindow Shell { get; private set; }
 
-        public static string Version => "1.0.0";
+        public static string Version => "1.0.1";
 
         public static string ProjectUrl => "https://github.com/MEIMAOA/EduKit";
 
