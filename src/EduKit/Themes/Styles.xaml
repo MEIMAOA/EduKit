@@ -473,6 +473,14 @@
         </Grid>
     </ControlTemplate>
 
+    <!-- 触控平移：所有 ScrollViewer 默认支持手指上下滑动与惯性滚动 -->
+    <Style TargetType="ScrollViewer">
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+        <Setter Property="ScrollViewer.PanningDeceleration" Value="0.001" />
+        <Setter Property="ScrollViewer.PanningRatio" Value="1.0" />
+        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+    </Style>
+
     <Style TargetType="ScrollBar">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="10" />
@@ -592,4 +600,5 @@
         </Style.Triggers>
     </Style>
 
+    <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 </ResourceDictionary>

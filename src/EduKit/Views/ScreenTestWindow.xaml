@@ -1,0 +1,21 @@
+<Window x:Class="EduKit.Views.ScreenTestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="屏幕坏点测试"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Topmost="True"
+        Background="White"
+        FontFamily="Segoe UI, Microsoft YaHei UI"
+        TextOptions.TextFormattingMode="Display"
+        Closed="Window_Closed">
+    <Grid>
+        <TextBlock x:Name="HintText"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,28"
+                   FontSize="14"
+                   Text="← / → 切换    Esc 退出" />
+    </Grid>
+</Window>

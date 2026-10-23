@@ -46,6 +46,8 @@
                                 Click="TurnOff_Click" />
                         <Button Content="打开显示设置" Style="{StaticResource BtnSmall}" Margin="0,0,8,8"
                                 Click="OpenDisplaySettings_Click" />
+                        <Button Content="屏幕坏点测试" Style="{StaticResource BtnSubtleSmall}" Margin="0,0,8,8"
+                                Click="ScreenTest_Click" />
                         <Button Content="刷新信息" Style="{StaticResource BtnSubtleSmall}" Margin="0,0,8,8"
                                 Click="Refresh_Click" />
                     </WrapPanel>

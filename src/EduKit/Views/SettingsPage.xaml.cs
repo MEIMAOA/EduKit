@@ -18,7 +18,6 @@ namespace EduKit.Views
         {
             DarkSwitch.IsChecked = ThemeManager.IsDark;
             AutoStartSwitch.IsChecked = AppData.IsAutoStartEnabled();
-            PortBox.Text = AppData.Settings.SharePort.ToString();
             VersionText.Text = "v" + App.Version + " · " + (Environment.Is64BitProcess ? "64 位" : "32 位");
             DataPathText.Text = "数据目录：" + AppData.Dir;
         }
@@ -38,20 +37,6 @@ namespace EduKit.Views
             AppData.Settings.StartWithWindows = enabled;
             AppData.TryApplyAutoStart(enabled);
             AppData.SaveSettings();
-        }
-
-        private void SavePort_Click(object sender, RoutedEventArgs e)
-        {
-            int port;
-            if (!int.TryParse(PortBox.Text.Trim(), out port) || port < 1024 || port > 65535)
-            {
-                Ui.Warn("端口请填写 1024 - 65535 之间的数字。");
-                return;
-            }
-
-            AppData.Settings.SharePort = port;
-            AppData.SaveSettings();
-            Ui.Info("端口已保存为 " + port + "。");
         }
 
         private void OpenData_Click(object sender, RoutedEventArgs e)

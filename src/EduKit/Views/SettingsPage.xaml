@@ -42,24 +42,6 @@
                         </StackPanel>
                     </Border>
 
-                    <Border Style="{StaticResource Card}" Margin="0,0,0,14">
-                        <StackPanel>
-                            <TextBlock Text="局域网快传" Style="{StaticResource SectionTitle}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="端口" Style="{StaticResource Body}" VerticalAlignment="Center" />
-                                <TextBox Grid.Column="1" x:Name="PortBox" Style="{StaticResource InputBox}"
-                                         Margin="12,0,8,0" />
-                                <Button Grid.Column="2" Content="保存" Style="{StaticResource BtnSmall}"
-                                        Click="SavePort_Click" />
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
                     <Border Style="{StaticResource Card}">
                         <StackPanel>
                             <TextBlock Text="数据" Style="{StaticResource SectionTitle}" />
@@ -83,7 +65,7 @@
                                 <Image Source="Assets/EduKit.ico" Width="46" Height="46" />
                                 <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="电教委工具箱" Style="{StaticResource H2}" />
-                                    <TextBlock x:Name="VersionText" Text="v1.0.1" Style="{StaticResource Caption}"
+                                    <TextBlock x:Name="VersionText" Text="v1.1.0" Style="{StaticResource Caption}"
                                                Margin="0,4,0,0" />
                                 </StackPanel>
                             </StackPanel>

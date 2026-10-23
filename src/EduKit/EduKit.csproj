@@ -14,9 +14,9 @@
     <Description>面向班级电教委员（电教委）的 Windows 桌面工具箱，兼容 Windows 7 SP1 及以上系统。</Description>
     <Company>MEIMAOA</Company>
     <Copyright>Copyright © 2026 MEIMAOA</Copyright>
-    <Version>1.0.1</Version>
-    <FileVersion>1.0.1.0</FileVersion>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <Version>1.1.0</Version>
+    <FileVersion>1.1.0.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <Prefer32Bit>true</Prefer32Bit>
     <Platforms>AnyCPU</Platforms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -31,11 +31,12 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.ServiceProcess" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\EduKit.ico" />
-    <EmbeddedResource Include="Core\SharePage.html" />
   </ItemGroup>
 
 </Project>

@@ -15,8 +15,8 @@ namespace EduKit
     {
         private static readonly string[] Pages =
         {
-            "dashboard", "timer", "random", "timetable", "duty", "network", "share",
-            "display", "audio", "power", "system", "launcher", "settings"
+            "dashboard", "hardware", "processes", "startup", "system", "network",
+            "display", "audio", "power", "tuba", "settings"
         };
 
         public static async void Run(string outputDir)
@@ -48,9 +48,11 @@ namespace EduKit
                     {
                         shell.Go(page);
 
-                        var settle = page == "dashboard" || page == "system" ? 1800
+                        var settle = page == "dashboard" || page == "system" || page == "hardware" ? 2000
+                            : page == "processes" || page == "startup" ? 1300
+                            : page == "tuba" ? 2200
                             : page == "network" ? 900
-                            : 360;
+                            : 450;
                         await Task.Delay(settle);
                         shell.UpdateLayout();
 

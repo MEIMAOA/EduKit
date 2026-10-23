@@ -11,11 +11,9 @@ namespace EduKit
     {
         private static Mutex _mutex;
 
-        public static TimerEngine Timer { get; private set; }
-
         public static MainWindow Shell { get; private set; }
 
-        public static string Version => "1.0.1";
+        public static string Version => "1.1.0";
 
         public static string ProjectUrl => "https://github.com/MEIMAOA/EduKit";
 
@@ -43,7 +41,6 @@ namespace EduKit
 
             AppData.Load();
             ThemeManager.Apply(AppData.Settings.DarkMode);
-            Timer = new TimerEngine();
 
             if (e.Args.Length >= 2 && string.Equals(e.Args[0], "--render", StringComparison.OrdinalIgnoreCase))
             {

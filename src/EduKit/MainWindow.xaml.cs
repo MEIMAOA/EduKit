@@ -59,18 +59,16 @@ namespace EduKit
 
         private void BuildNavigation()
         {
-            _navItems.Add(new NavItem("dashboard", "仪表盘", "IconHome"));
-            _navItems.Add(new NavItem("timer", "课堂计时", "IconTimer"));
-            _navItems.Add(new NavItem("random", "随机点名", "IconRoster"));
-            _navItems.Add(new NavItem("timetable", "课程表", "IconCalendar"));
-            _navItems.Add(new NavItem("duty", "值日轮换", "IconDuty"));
+            _navItems.Add(new NavItem("dashboard", "系统概览", "IconHome"));
+            _navItems.Add(new NavItem("hardware", "硬件信息", "IconSystem"));
+            _navItems.Add(new NavItem("processes", "进程管理", "IconList"));
+            _navItems.Add(new NavItem("startup", "启动与服务", "IconRefresh"));
+            _navItems.Add(new NavItem("system", "系统维护", "IconWrench"));
             _navItems.Add(new NavItem("network", "网络诊断", "IconWifi"));
-            _navItems.Add(new NavItem("share", "局域网快传", "IconShare"));
             _navItems.Add(new NavItem("display", "显示与投影", "IconDisplay"));
             _navItems.Add(new NavItem("audio", "音量控制", "IconVolume"));
             _navItems.Add(new NavItem("power", "电源管理", "IconPower"));
-            _navItems.Add(new NavItem("system", "系统工具", "IconSystem"));
-            _navItems.Add(new NavItem("launcher", "快捷启动", "IconLauncher"));
+            _navItems.Add(new NavItem("tuba", "图吧工具箱", "IconRocket"));
             _navItems.Add(new NavItem("settings", "设置与关于", "IconSettings"));
 
             NavList.ItemsSource = _navItems;
@@ -109,17 +107,15 @@ namespace EduKit
         {
             switch (key)
             {
-                case "timer": return new TimerPage();
-                case "random": return new RandomPage();
-                case "timetable": return new TimetablePage();
-                case "duty": return new DutyPage();
+                case "hardware": return new HardwarePage();
+                case "processes": return new ProcessesPage();
+                case "startup": return new StartupPage();
+                case "system": return new SystemPage();
                 case "network": return new NetworkPage();
-                case "share": return new SharePage();
                 case "display": return new DisplayPage();
                 case "audio": return new AudioPage();
                 case "power": return new PowerPage();
-                case "system": return new SystemPage();
-                case "launcher": return new LauncherPage();
+                case "tuba": return new TubaPage();
                 case "settings": return new SettingsPage();
                 default: return new DashboardPage();
             }

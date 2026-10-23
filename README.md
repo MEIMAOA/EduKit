@@ -1,22 +1,36 @@
 # 电教委工具箱 · EduKit
 
-> 面向班级电教委员（电教委）的 Windows 桌面工具箱：课堂计时、随机点名、课程表、值日轮换、网络诊断、局域网快传、显示与投影、音量控制、电源管理、系统工具、快捷启动。
+> 面向班级电教委员（电教委）与电脑维护人员的 Windows **专业系统工具箱**：系统概览、硬件信息、进程管理、启动项与服务、系统维护、网络诊断、显示与投影、音量、电源、屏幕测试，并集成图吧工具箱入口。
 >
 > 支持 **Windows 7 SP1 / 8 / 8.1 / 10 / 11**，32 位 / 64 位，UTF-8 中文界面，非商业许可开源（PolyForm Noncommercial 1.0.0，禁止商业使用）。
 
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20SP1%2B-0078D4)](#兼容性说明)
 [![.NET](https://img.shields.io/badge/.NET%20Framework-4.6.2%2B-512BD4)](https://dotnet.microsoft.com/download/dotnet-framework)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
-[![Release](https://img.shields.io/badge/release-v1.0.1-blue)](https://github.com/MEIMAOA/EduKit/releases)
+[![Release](https://img.shields.io/badge/release-v1.1.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
 [![Build](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml/badge.svg)](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml)
 
-![仪表盘](docs/shots/light-dashboard.png)
+![系统概览](docs/shots/light-dashboard.png)
+
+---
+
+## v1.1.0 更新：只保留专业系统功能
+
+根据反馈，v1.1.0 移除了课堂计时、随机点名、课程表、值日轮换、局域网快传、快捷启动等与系统维护无关的模块，专注专业系统类功能，并新增：
+
+- **硬件信息**：CPU / 内存条 / 主板 / BIOS / 显卡 / 电池 / 磁盘健康 / 设备问题 / 系统激活状态；
+- **进程管理**：进程列表、内存占用、文件路径，支持搜索与结束进程；
+- **启动与服务**：注册表启动项、启动文件夹、Windows 服务启动/停止/重启；
+- **系统维护**：磁盘空间、缓存清理（临时文件 / 缩略图 / 错误报告 / 回收站 / Windows 更新缓存）、SFC / DISM / 网络重置 / 系统还原 / 事件查看器 / 蓝屏转储；
+- **屏幕坏点测试**：全屏纯色循环，检查投影仪、显示器的坏点与色彩；
+- **图吧工具箱集成**：自动检测本机图吧工具箱（图拉丁吧工具箱）目录，按分类列出其中的工具并一键启动，也可手动选择目录或打开官网；
+- **触控优化**：手指上下滑动支持惯性滚动，鼠标滚轮 / 触控板双指滑动改为平滑动画，长列表使用像素滚动。
 
 ---
 
 ## 为什么不是 WinUI 3 / WinUI 2？
 
-需求里要求「WinUI 3，不行就 WinUI 2，并且支持 Windows 7」。实际核对微软官方支持矩阵后：
+需求要求支持 Windows 7。核对微软官方支持矩阵：
 
 | 技术 | 最低系统要求 | 能否支持 Win7 |
 | --- | --- | --- |
@@ -24,11 +38,7 @@
 | WinUI 2（UWP 控件库） | Windows 10（UWP 平台） | ❌ 不支持 |
 | WPF（.NET Framework） | Windows 7 SP1 / .NET Framework 4.6.2 | ✅ 支持 |
 
-**WinUI 3 和 WinUI 2 都无法运行在 Windows 7 上**，这是框架层面的硬限制。因此本项目采用唯一能同时满足「现代 UI + Windows 7」的方案：
-
-> **WPF（.NET Framework 4.6.2） + 自绘 WinUI / Fluent 风格主题**
-
-界面按 WinUI 的视觉语言实现：左侧导航、圆角卡片、Fluent 配色、亮色/暗色主题、矢量图标（不依赖 Win10 才有的 Segoe MDL2 字体）、无边框自绘标题栏，保证在 Windows 7 的经典主题和 Aero 主题下都能正常显示。
+因此采用 **WPF（.NET Framework 4.6.2） + 自绘 WinUI / Fluent 风格主题**：左侧导航、圆角卡片、亮/暗主题、矢量图标（不依赖 Win10 才有的 Segoe MDL2 字体）、自绘标题栏，在 Windows 7 的经典主题与 Aero 主题下都能正常显示。
 
 ---
 
@@ -36,45 +46,63 @@
 
 | 模块 | 主要功能 |
 | --- | --- |
-| 🏠 仪表盘 | 大时钟、日期/周次、今日课程、本周值日小组、本机概览、8 个常用快捷入口、全屏公告、截图 |
-| ⏱ 课堂计时 | 倒计时 / 秒表、8 档快速预设 + 自定义分钟、暂停/继续/重置、进度条、结束提示音、**投影全屏显示**（大字号，到点变黄/变红） |
-| 🎲 随机点名 | 名单导入/保存、单人或多人抽取、不重复模式（抽完一轮自动重置）、滚动动画、点名记录、一键清空 |
-| 📅 课程表 | 7×8 可编辑表格、自动保存、今天所在列高亮、今日课程一键复制（粘贴到班级群）、清空表格 |
-| 🧹 值日轮换 | 按名单自动平均分组（1–8 组）、按 ISO 周号自动轮换、手动上一组/下一组、本周值日高亮 |
-| 📶 网络诊断 | 网卡/IP/MAC/网关/速率列表、Ping 测试（次数、平均/最小/最大延迟）、DNS 解析、TCP 端口连通性、复制本机 IP、打开网络连接、刷新 DNS 缓存 |
-| 📤 局域网快传 | 内置 HTTP 服务（无需管理员、不依赖 http.sys）、手机浏览器上传/下载/删除文件、拖拽上传、进度条、传输日志 |
-| 🖥 显示与投影 | 当前分辨率/刷新率/色深/显示器数量、复制/扩展/仅电脑/仅投影（Win+P 等效）、分辨率切换（15 秒自动还原保护）、关闭显示器、打开显示设置 |
-| 🔊 音量控制 | 系统主音量滑条（Core Audio API）、静音开关、20/50/80/100% 预设、上一首/播放暂停/下一首/停止、打开音量合成器、测试提示音 |
-| 🔌 电源管理 | 关机/重启/注销/睡眠/锁屏/关闭显示器（全部二次确认）、定时关机/重启/取消定时、倒计时状态显示 |
-| 🛠 系统工具 | WMI 硬件信息（系统/CPU/内存/显卡/主板/运行时长/IP）、磁盘空间、清理临时文件、重启资源管理器、全屏截图保存、系统工具入口 |
-| 🚀 快捷启动 | 内置 16 个常用系统工具、自定义添加程序/网址/文件/`shell:` 位置、排序、双击启动、分类标签 |
-| ⚙ 设置与关于 | 亮/暗主题切换、开机自启（注册表 Run，免管理员）、局域网端口、打开数据目录、恢复默认设置、检查更新（GitHub Releases）、开源信息 |
+| 🏠 系统概览 | 处理器 / 内存 / 显卡 / 系统 / 运行时长、磁盘空间、设备问题、图吧工具箱状态、常用工具入口 |
+| 🔧 硬件信息 | 完整配置（系统、CPU 核心线程/主频/缓存/插槽、内存条容量/频率/品牌/型号、主板/BIOS、显卡与驱动日期、电池）、磁盘型号与健康、有问题的设备、一键复制 |
+| 📋 进程管理 | 进程列表（名称 / PID / 内存 / 公司 / 路径）、搜索、结束进程（二次确认）、打开文件位置 |
+| ⚙ 启动与服务 | 开机启动项（HKLM / HKCU / 32 位 / 启动文件夹）、删除启动项、任务管理器 / msconfig 入口、Windows 服务列表（状态 / 启动类型）、启动 / 停止 / 重启服务 |
+| 🧹 系统维护 | 磁盘空间与型号、缓存与垃圾清理（安全项一键清理、含管理员项、磁盘清理）、SFC、DISM、重置网络、刷新 DNS、系统还原、事件查看器、蓝屏转储目录、设备管理器、服务管理、系统信息 |
+| 📶 网络诊断 | 网卡 / IP / MAC / 网关 / 速率、Ping（次数、平均/最小/最大延迟）、DNS 解析、TCP 端口连通性、复制本机 IP、打开网络连接、刷新 DNS 缓存 |
+| 🖥 显示与投影 | 分辨率 / 刷新率 / 色深 / 显示器数量、复制 / 扩展 / 仅电脑 / 仅投影、分辨率切换（15 秒自动还原保护）、关闭显示器、**屏幕坏点测试**、打开显示设置 |
+| 🔊 音量控制 | 系统主音量（Core Audio）、静音、20/50/80/100% 预设、上一首 / 播放暂停 / 下一首 / 停止、音量合成器、测试提示音 |
+| 🔌 电源管理 | 关机 / 重启 / 注销 / 睡眠 / 锁屏 / 关闭显示器（全部二次确认）、定时关机 / 重启 / 取消定时、倒计时显示 |
+| 🚀 图吧工具箱 | 自动检测本机图吧工具箱、按分类列出工具（CPU-Z / AIDA64 / HWiNFO / CrystalDiskInfo / DiskGenius / FurMark / Prime95 等）、一键启动、手动选择目录、打开官网（https://www.tbtool.cn/） |
+| ⚙ 设置与关于 | 亮/暗主题、开机自启（注册表 Run，免管理员）、打开数据目录、恢复默认设置、检查更新（GitHub Releases）、开源协议信息 |
+
+---
+
+## 触控与滚动手感优化
+
+Windows 7 到 Windows 11 的触屏设备、触控板都能获得一致的顺滑体验：
+
+- 所有滚动区域默认开启 `PanningMode.VerticalFirst` 惯性平移，手指上下滑动即可滚动；
+- 自研 `SmoothScrollViewer`：鼠标滚轮 / 触控板双指滑动使用缓动动画，不再一格一格跳动；
+- 列表使用像素滚动，长列表滑动更细腻；
+- 惯性减速率与位移比例针对触控调校（`PanningDeceleration=0.001`）。
+
+---
+
+## 图吧工具箱集成说明
+
+- 程序会在常见位置自动查找本机图吧工具箱（如 `C:\图吧工具箱`、各盘符根目录、Program Files、桌面、下载目录、注册表卸载信息），也可以手动选择目录；
+- 检测成功后自动扫描最新版本 `tools` 目录，按分类列出工具，点击即启动；
+- **本项目不打包、不重新分发图吧工具箱及其任何第三方工具**，仅在本机已安装时提供启动入口；请从官网 [https://www.tbtool.cn/](https://www.tbtool.cn/) 下载图吧工具箱，并遵守其自身许可协议；
+- 硬件检测类工具（CPU-Z、AIDA64、CrystalDiskInfo 等）由对应厂商提供，请遵守各自许可。
 
 ---
 
 ## 界面预览
 
-| 课堂计时 | 随机点名 |
+| 系统概览 | 硬件信息 |
 | --- | --- |
-| ![计时](docs/shots/light-timer.png) | ![点名](docs/shots/light-random.png) |
+| ![系统概览](docs/shots/light-dashboard.png) | ![硬件信息](docs/shots/light-hardware.png) |
 
-| 课程表 | 局域网快传 |
+| 进程管理 | 启动与服务 |
 | --- | --- |
-| ![课程表](docs/shots/light-timetable.png) | ![快传](docs/shots/light-share.png) |
+| ![进程管理](docs/shots/light-processes.png) | ![启动与服务](docs/shots/light-startup.png) |
 
-| 显示与投影 | 音量控制 |
+| 系统维护 | 图吧工具箱 |
 | --- | --- |
-| ![显示](docs/shots/light-display.png) | ![音量](docs/shots/light-audio.png) |
+| ![系统维护](docs/shots/light-system.png) | ![图吧工具箱](docs/shots/light-tuba.png) |
 
-| 系统工具 | 快捷启动 |
+| 网络诊断 | 显示与投影 |
 | --- | --- |
-| ![系统](docs/shots/light-system.png) | ![启动器](docs/shots/light-launcher.png) |
+| ![网络诊断](docs/shots/light-network.png) | ![显示与投影](docs/shots/light-display.png) |
 
 **暗色主题：**
 
-| 仪表盘 | 快捷启动 |
+| 系统概览 | 硬件信息 |
 | --- | --- |
-| ![暗色仪表盘](docs/shots/dark-dashboard.png) | ![暗色启动器](docs/shots/dark-launcher.png) |
+| ![暗色系统概览](docs/shots/dark-dashboard.png) | ![暗色硬件信息](docs/shots/dark-hardware.png) |
 
 > 所有截图由程序自带的离屏截图模式（`--render`）自动生成，未经过任何后期处理。
 
@@ -82,9 +110,7 @@
 
 ## 快速开始
 
-### 直接使用
-
-1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.0.1.zip`；
+1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.1.0.zip`；
 2. 解压到任意目录（建议不要放在 `C:\Program Files`，避免权限问题）；
 3. 双击 `EduKit.exe` 运行。
 
@@ -92,16 +118,13 @@
 
 - Windows 7 SP1 / 8 / 8.1 / 10 / 11，32 位或 64 位；
 - .NET Framework **4.6.2 或更高版本**（Windows 10/11 通常已自带 4.8）；
-- Windows 7 用户如提示缺少 .NET Framework，请先安装：
-  - [.NET Framework 4.8 在线安装包（微软官方，支持 Win7 SP1）](https://dotnet.microsoft.com/download/dotnet-framework/net48)
+- Windows 7 用户如提示缺少 .NET Framework，请先安装 [.NET Framework 4.8（微软官方，支持 Win7 SP1）](https://dotnet.microsoft.com/download/dotnet-framework/net48)；
 - 首次运行会在 `%APPDATA%\EduKit` 创建数据目录；如果该目录不可写（例如受管控的电脑），程序会自动回退到 `%LOCALAPPDATA%\EduKit` 或程序目录下的 `EduKitData`，并在「设置」页显示实际数据目录。
 
-### 首次使用建议
+### 权限说明
 
-1. 打开「随机点名」，在右侧「学生名单」里每行输入一个名字，点「保存名单」；
-2. 打开「课程表」，把这学期的课填进去（会自动保存）；
-3. 打开「局域网快传」，点「启动快传」，手机连同一个 Wi-Fi 后用浏览器打开显示的地址即可互传文件；
-4. 打开「设置」，按需开启「开机自动启动」、切换深色主题。
+- 程序默认以普通权限运行，浏览硬件信息、进程、启动项、网络诊断、显示与音量等功能都不需要管理员权限；
+- SFC / DISM / 重置网络 / 启动或停止服务 / 清理 Windows 更新缓存等操作需要管理员权限，点击相应按钮时会弹出 UAC 提权提示。
 
 ---
 
@@ -122,18 +145,16 @@ cd EduKit
 # 编译（Debug / Release）
 dotnet build EduKit.sln -c Release
 
-# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.0.1.zip）
+# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.1.0.zip）
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.0.1.zip`。
+构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.1.0.zip`。
 
 ### 自检与截图模式
 
-程序内置两个无界面模式，便于验证和生成文档图片：
-
 ```powershell
-# 冒烟自检：配置读写、WMI、网卡、显示、音量、局域网快传 HTTP 端到端
+# 冒烟自检：配置读写、硬件信息、进程/服务/启动项、网络、显示、音量、清理、图吧工具箱扫描
 .\src\EduKit\bin\Release\EduKit.exe --selftest .\selftest.txt
 
 # 离屏渲染全部页面截图（窗口在屏幕外，不会打扰用户）
@@ -154,11 +175,10 @@ EduKit/
 │  ├─ App.xaml(.cs)              # 应用入口、单实例、全局异常日志
 │  ├─ MainWindow.xaml(.cs)       # 自绘标题栏 + 侧栏导航 + 页面缓存
 │  ├─ Screenshots.cs             # --render 离屏截图
-│  ├─ SelfTest.cs                # --selftest 冒烟自检
 │  ├─ Themes/                    # 亮/暗色资源 + Fluent 控件样式 + 矢量图标
-│  ├─ Controls/IconButton.cs     # 矢量图标按钮
-│  ├─ Core/                      # 配置、P/Invoke、音量、快传、WMI、网络、计时引擎
-│  ├─ Views/                     # 13 个功能页面 + 全屏投影窗口 + 快捷方式编辑窗
+│  ├─ Controls/                  # 矢量图标按钮、触控平滑滚动容器
+│  ├─ Core/                      # 配置、P/Invoke、音量、硬件信息、进程/服务、清理、图吧集成、自检
+│  ├─ Views/                     # 11 个功能页面 + 屏幕坏点测试窗口
 │  └─ Assets/EduKit.ico          # 程序图标（tools/make-icon.ps1 生成）
 ├─ tools/make-icon.ps1           # 图标生成脚本
 └─ docs/shots/                   # README 截图
@@ -166,13 +186,15 @@ EduKit/
 
 ## 技术实现要点
 
-- **零第三方依赖**：除了 .NET Framework 自带程序集，没有任何 NuGet 包，发布包只有 `EduKit.exe` + 配置/图标，拷贝即用；
-- **配置持久化**：使用内置 `DataContractJsonSerializer` 存 JSON（settings / roster / timetable / launcher），人类可读、便于备份；
+- **零第三方依赖**：仅使用 .NET Framework 自带程序集，发布包只有 `EduKit.exe` + 配置/图标，拷贝即用；
+- **配置持久化**：内置 `DataContractJsonSerializer` 存 JSON，人类可读、便于备份；
+- **硬件信息**：WMI（`Win32_Processor` / `PhysicalMemory` / `BaseBoard` / `BIOS` / `VideoController` / `Battery` / `PnPEntity` / `LogicalDisk` 等）+ 注册表 + Win32，读取失败自动跳过单项，不影响界面；
 - **系统音量**：COM 互操作 `IAudioEndpointVolume`（Windows 7+ Core Audio API），失败时自动降级为媒体键；
-- **局域网快传**：自研 `TcpListener` 极简 HTTP/1.1 服务（GET 列表/下载、POST 上传/删除），不占用 `http.sys`，普通权限即可运行；
-- **硬件信息**：WMI（`Win32_OperatingSystem` / `Processor` / `VideoController` / `BaseBoard` / `LogicalDisk` 等），读取失败自动跳过单个项目，不会影响界面；
+- **服务管理**：`ServiceController` + 注册表读取启动类型；
+- **系统清理**：临时目录、Windows Update 缓存、错误报告、缩略图缓存、回收站（Shell32 `SHQueryRecycleBin` / `SHEmptyRecycleBin`）；
 - **显示控制**：`EnumDisplaySettings` / `ChangeDisplaySettings`、`DisplaySwitch.exe`、`WM_SYSCOMMAND + SC_MONITORPOWER`；
-- **电源控制**：`shutdown.exe`（普通用户可用）、`SetSuspendState`、`LockWorkStation`；
+- **电源控制**：`shutdown.exe`、`SetSuspendState`、`LockWorkStation`；
+- **触控滚动**：`PanningMode` 惯性平移 + 自研 `SmoothScrollViewer` 缓动滚动；
 - **主题切换**：两套 `ResourceDictionary` 运行时替换，全部控件使用 `DynamicResource`；
 - **Windows 7 兼容**：不引用任何 Win10+ API，图标使用矢量 `Geometry` 而非 Segoe MDL2，标题栏自绘，`Prefer32Bit` 保证在老机器上运行。
 
@@ -180,8 +202,8 @@ EduKit/
 
 - 开发与测试环境：Windows 11 26200（.NET Framework 4.8 / .NET SDK 10.0.401）；
 - 目标框架 `net462`，程序清单声明兼容 Windows 7 / 8 / 8.1 / 10 / 11；
-- 程序以 `asInvoker` 普通权限运行，不要求管理员权限（关机、快传、投影切换均可在普通用户下工作）；
-- 若教室电脑关闭了 .NET Framework 4.6.2+，请先安装运行库。
+- 程序以 `asInvoker` 普通权限运行；需要管理员的维护操作会单独弹 UAC；
+- 若教室电脑没有 .NET Framework 4.6.2+，请先安装运行库。
 
 ## 常见问题
 
@@ -191,14 +213,14 @@ EduKit/
 **Q：为什么不用 WinUI 3？**
 WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF 自绘 Fluent 风格，视觉接近 WinUI。
 
-**Q：局域网快传手机打不开页面？**
-确认手机与电脑在同一 Wi-Fi；部分路由器开启了「AP 隔离」会导致设备间无法互访；首次启动时请允许 Windows 防火墙访问；可尝试在「设置」里换一个端口（1024–65535）。
+**Q：图吧工具箱显示"未检测到"？**
+程序会在常见位置自动查找，如果放在自定义位置，请到「图吧工具箱」页面点击「选择目录」手动指定，目录选到包含 `图吧工具箱20xx` 文件夹的外层目录即可。也可以直接从官网 [https://www.tbtool.cn/](https://www.tbtool.cn/) 下载安装。
 
-**Q：切换投影模式没有反应？**
-程序调用系统 `DisplaySwitch.exe`（等同 Win+P）。如果显卡驱动异常，请直接用 Win+P 或打开显示设置检查。
+**Q：清理或服务操作提示需要管理员权限？**
+涉及系统目录、Windows 更新缓存、系统服务的操作需要管理员权限，点击时选择"是"即可提权；浏览类功能不需要管理员权限。
 
-**Q：定时关机会不会误关？**
-所有关机/重启操作都有二次确认；定时任务会显示倒计时，可随时点「取消定时」（内部调用 `shutdown /a`）。
+**Q：触屏滑动不跟手？**
+程序已为所有滚动区域开启惯性平移并加了平滑滚动。如果仍然卡顿，可能是老机器的显示驱动或屏体本身限制，可尝试关闭动画（Windows 性能选项）后重启程序。
 
 **Q：数据在哪里？怎么备份？**
 默认 `%APPDATA%\EduKit`（受管控电脑会自动回退）。「设置 → 打开数据文件夹」可直接跳转；复制该目录即可备份，删除即恢复初始状态。
@@ -208,6 +230,14 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 
 ## 更新日志
 
+### v1.1.0（2026-10-23）
+
+- **产品定位调整**：移除课堂计时、随机点名、课程表、值日轮换、局域网快传、快捷启动等非系统模块，只保留专业系统类功能；
+- 新增硬件信息、进程管理、启动与服务、系统维护（清理/修复）、屏幕坏点测试；
+- 新增图吧工具箱本地检测、分类扫描与一键启动（不重新分发第三方程序）；
+- 新增触控/触控板平滑滚动与惯性平移；
+- 界面改为系统概览首页，11 个模块重新梳理；截图全部重新生成。
+
 ### v1.0.1（2026-10-23）
 
 - 许可证由 MIT 变更为 **PolyForm Noncommercial 1.0.0**：个人、学生、教师以及学校等非商业组织可免费使用、修改和分发；**禁止任何商业用途**；
@@ -216,19 +246,19 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 
 ### v1.0.0（2026-10-23）
 
-- 首个版本：13 个功能模块、亮/暗色主题、Windows 7 兼容；
+- 首个版本：课堂工具类 13 个模块、亮/暗色主题、Windows 7 兼容；
 - 内置自检（`--selftest`）与离屏截图（`--render`）模式；
 - 零第三方依赖，发布包单 exe 即用。
 
 ## English Summary
 
-EduKit is a lightweight Windows toolbox for the class IT/AV committee member ("电教委"). It ships 13 modules: dashboard, class timer, random student picker, timetable, duty rotation, network diagnostics, LAN file sharing (built-in HTTP server), display/projector control, volume control, power management, system utilities and an app launcher. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme (light/dark, rounded cards, vector icons). No third-party packages. Released under the PolyForm Noncommercial License 1.0.0: free for personal, educational and other noncommercial use, commercial use requires a separate license.
+EduKit is a lightweight, professional Windows system toolbox for class IT/AV committee members and PC maintenance. It provides a system overview, detailed hardware inventory (CPU, memory modules, motherboard/BIOS, GPU, disks, device problems, activation), process manager, startup items and Windows services, system maintenance (cleanup, SFC/DISM, network reset), network diagnostics, display/projector control with a dead-pixel test, volume control and power management. It also detects a locally installed TuBa Toolbox (图吧工具箱) and launches its tools without redistributing them. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme. Touch scrolling uses inertial panning and a custom smooth scroller. No third-party packages. Released under the PolyForm Noncommercial License 1.0.0: free for personal, educational and other noncommercial use, commercial use requires a separate license.
 
 ## 开源协议
 
 本项目采用 **[PolyForm Noncommercial License 1.0.0](LICENSE)**（非商业许可）：
 
-- ✅ **允许**：个人学习、教学、学校 / 公益组织 / 政府机构等**非商业**用途，可自由使用、修改、分发（分发时需保留许可证与 Required Notice 版权声明）；
+- ✅ **允许**：个人学习、教学、学校 / 公益组织 / 政府机构等**非商业**用途，可自由使用、修改、分发（分发时需保留许可证与 `Required Notice` 版权声明）；
 - ❌ **禁止**：任何**商业用途**，包括但不限于打包销售、付费分发、增值服务、企业内部商业使用等；
 - 💼 **商业授权**：如需商业使用，请通过 GitHub Issue 或邮箱联系作者，获取单独商业授权。
 
@@ -236,4 +266,4 @@ EduKit is a lightweight Windows toolbox for the class IT/AV committee member ("�
 
 > 说明：v1.0.0 曾以 MIT 协议发布，已经分发的 v1.0.0 副本仍适用 MIT；自 v1.0.1 起采用上述非商业许可。
 
-欢迎 Star、Issue、PR。如果这个工具帮到了你，也欢迎推荐给其他班级的电教委。
+欢迎 Star、Issue、PR。

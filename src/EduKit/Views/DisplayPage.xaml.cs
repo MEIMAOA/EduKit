@@ -103,6 +103,12 @@ namespace EduKit.Views
             Native.Start("desk.cpl");
         }
 
+        private void ScreenTest_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new ScreenTestWindow { Owner = Window.GetWindow(this) };
+            window.ShowDialog();
+        }
+
         private void ModeList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 只用于选择，不自动应用

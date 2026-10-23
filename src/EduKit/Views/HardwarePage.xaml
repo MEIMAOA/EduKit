@@ -1,0 +1,106 @@
+<UserControl x:Class="EduKit.Views.HardwarePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:EduKit.Controls">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,14">
+            <StackPanel>
+                <TextBlock Text="硬件信息" Style="{StaticResource H1}" />
+                <TextBlock x:Name="SummaryText" Text="正在读取硬件信息…" Style="{StaticResource Sub}" Margin="0,5,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button Content="复制全部" Style="{StaticResource BtnSmall}" Click="CopyAll_Click" />
+                <Button Content="刷新" Style="{StaticResource BtnPrimarySmall}" Margin="8,0,0,0" Click="Refresh_Click" />
+            </StackPanel>
+        </Grid>
+
+        <controls:SmoothScrollViewer Grid.Row="1">
+            <StackPanel>
+                <Border Style="{StaticResource Card}" Margin="0,0,0,14">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="完整配置" Style="{StaticResource SectionTitle}" />
+                        <ItemsControl x:Name="InfoList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Label}" Style="{StaticResource Sub}" />
+                                        <TextBlock Grid.Column="1" Text="{Binding Value}" Style="{StaticResource Body}"
+                                                   TextWrapping="Wrap" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DockPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}" Margin="0,0,0,14">
+                    <StackPanel>
+                        <TextBlock Text="磁盘与健康" Style="{StaticResource SectionTitle}" />
+                        <ItemsControl x:Name="DiskList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Name}" Style="{StaticResource H3}" VerticalAlignment="Top" />
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding Model}" Style="{StaticResource Body}"
+                                                       TextWrapping="Wrap" />
+                                            <TextBlock Style="{StaticResource Caption}" Margin="0,3,0,0">
+                                                <Run Text="{Binding SizeText}" />
+                                                <Run Text="  ·  " />
+                                                <Run Text="{Binding FreeText}" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <Border Grid.Column="2" Style="{StaticResource Chip}" Background="{DynamicResource SuccessSoft}">
+                                            <TextBlock Text="{Binding Health}" FontSize="11"
+                                                       Foreground="{DynamicResource Success}" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="有问题的设备" Style="{StaticResource SectionTitle}" />
+                        <ItemsControl x:Name="DeviceList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource Body}" />
+                                            <TextBlock Text="{Binding Error}" Style="{StaticResource Caption}" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1" Text="{Binding Class}" Style="{StaticResource Caption}"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock x:Name="NoDeviceText" Text="没有发现驱动异常的设备。"
+                                   Style="{StaticResource Caption}" Visibility="Collapsed" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </controls:SmoothScrollViewer>
+    </Grid>
+</UserControl>
