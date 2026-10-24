@@ -13,5 +13,9 @@ namespace EduKit.Core
 
         /// <summary>用户手动指定的图吧工具箱目录（为空时自动搜索）。</summary>
         [DataMember(Order = 4)] public string TubaPath { get; set; } = string.Empty;
+
+        [DataMember(Order = 5)] public bool AutoCheckUpdates { get; set; } = true;
+
+        [DataMember(Order = 6)] public bool AutoInstallUpdates { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using EduKit.Core;
@@ -13,7 +14,7 @@ namespace EduKit
 
         public static MainWindow Shell { get; private set; }
 
-        public static string Version => "1.1.0";
+        public static string Version => "1.2.0";
 
         public static string ProjectUrl => "https://github.com/MEIMAOA/EduKit";
 
@@ -56,6 +57,44 @@ namespace EduKit
 
             Shell = new MainWindow();
             Shell.Show();
+
+            _ = AutoUpdateAsync();
+        }
+
+        public static UpdateInfo PendingUpdate { get; private set; }
+
+        private static async Task AutoUpdateAsync()
+        {
+            if (AppData.Settings == null || !AppData.Settings.AutoCheckUpdates)
+            {
+                return;
+            }
+
+            await Task.Delay(4000);
+            var info = await UpdateChecker.CheckAsync();
+            if (info == null || !info.HasUpdate)
+            {
+                return;
+            }
+
+            PendingUpdate = info;
+            if (!AppData.Settings.AutoInstallUpdates)
+            {
+                return;
+            }
+
+            try
+            {
+                var error = await UpdateChecker.DownloadAndApplyAsync(info, null, System.Threading.CancellationToken.None);
+                if (error == null)
+                {
+                    Current.Shutdown();
+                }
+            }
+            catch
+            {
+                // 自动更新失败时保持当前版本运行
+            }
         }
 
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

@@ -112,6 +112,43 @@ namespace EduKit
                 var temp = SystemCleanup.GetTempSize();
                 Check("统计临时文件", temp >= 0, Native.FormatBytes(temp));
 
+                try
+                {
+                    var updateInfo = await UpdateChecker.CheckAsync();
+                    if (string.IsNullOrEmpty(updateInfo.Error))
+                    {
+                        lines.Add("PASS  应用更新检查  -> 最新 v" + updateInfo.LatestVersion +
+                                  "，当前 v" + App.Version);
+                    }
+                    else
+                    {
+                        lines.Add("SKIP  应用更新检查  -> " + updateInfo.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lines.Add("SKIP  应用更新检查  -> " + ex.Message);
+                }
+
+                try
+                {
+                    var package = await TubaInstaller.GetLatestAsync();
+                    if (package != null)
+                    {
+                        lines.Add("PASS  图吧工具箱在线版本  -> v" + package.Version +
+                                  "，安装版 " + Native.FormatBytes(package.SetupSize) +
+                                  "，便携版 " + Native.FormatBytes(package.PortableSize));
+                    }
+                    else
+                    {
+                        lines.Add("SKIP  图吧工具箱在线版本  -> 无法获取（网络或 API 限流）");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lines.Add("SKIP  图吧工具箱在线版本  -> " + ex.Message);
+                }
+
                 var tuba = TubaToolbox.Detect();
                 if (string.IsNullOrEmpty(tuba))
                 {

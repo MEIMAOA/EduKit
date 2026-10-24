@@ -71,7 +71,7 @@
                     <StackPanel DockPanel.Dock="Bottom" Margin="16,6,16,14">
                         <TextBlock Text="非商业许可 · 禁止商用" Style="{StaticResource Caption}" />
                         <TextBlock Text="Win7 / 10 / 11 兼容" Style="{StaticResource Caption}" Margin="0,3,0,0" />
-                        <TextBlock x:Name="VersionText" Text="v1.1.0" Style="{StaticResource Caption}" Margin="0,3,0,0" />
+                        <TextBlock x:Name="VersionText" Text="v1.2.0" Style="{StaticResource Caption}" Margin="0,3,0,0" />
                     </StackPanel>
 
                     <ListBox x:Name="NavList"

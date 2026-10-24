@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using EduKit.Core;
 
 namespace EduKit.Views
@@ -10,11 +13,18 @@ namespace EduKit.Views
     public partial class TubaPage : UserControl
     {
         private List<TubaTool> _tools = new List<TubaTool>();
+        private TubaPackage _package;
+        private CancellationTokenSource _downloadCts;
+        private bool _downloading;
 
         public TubaPage()
         {
             InitializeComponent();
-            Loaded += (s, e) => DetectAndScan();
+            Loaded += (s, e) =>
+            {
+                DetectAndScan();
+                LoadPackageAsync();
+            };
         }
 
         private async void DetectAndScan()
@@ -125,6 +135,162 @@ namespace EduKit.Views
                     Ui.Error("启动失败：" + error);
                 }
             }
+        }
+
+        private async void LoadPackageAsync()
+        {
+            PackageText.Text = "正在获取最新版本…";
+            SetupButton.IsEnabled = false;
+            PortableButton.IsEnabled = false;
+            try
+            {
+                _package = await TubaInstaller.GetLatestAsync();
+            }
+            catch
+            {
+                _package = null;
+            }
+
+            if (_package == null)
+            {
+                PackageText.Text = "获取最新版本失败（网络受限或 GitHub API 限流）。可以点击「发布页」手动下载。";
+                return;
+            }
+
+            PackageText.Text = "最新版本 v" + _package.Version +
+                               " · 安装版 " + Native.FormatBytes(_package.SetupSize) +
+                               " · 便携版 " + Native.FormatBytes(_package.PortableSize);
+            SetupButton.IsEnabled = _package.SetupUrl != null;
+            PortableButton.IsEnabled = _package.PortableUrl != null;
+        }
+
+        private void RefreshPackage_Click(object sender, RoutedEventArgs e)
+        {
+            LoadPackageAsync();
+        }
+
+        private void OpenRelease_Click(object sender, RoutedEventArgs e)
+        {
+            Native.OpenUrl(_package?.DownloadPageUrl ?? "https://github.com/luolangaga/tubatools/releases");
+        }
+
+        private async void InstallSetup_Click(object sender, RoutedEventArgs e)
+        {
+            if (_package == null || _package.SetupUrl == null)
+            {
+                Ui.Warn("没有可用的安装包信息，请先刷新版本。");
+                return;
+            }
+
+            if (!Ui.Confirm("将下载图吧工具箱CE 安装包（" + Native.FormatBytes(_package.SetupSize) +
+                            "），下载完成后自动启动安装程序。\r\n\r\n继续吗？"))
+            {
+                return;
+            }
+
+            await DownloadAsync(async (progress, token) =>
+            {
+                DownloadText.Text = "正在下载安装包…";
+                return await TubaInstaller.DownloadAndRunSetupAsync(_package,
+                    p => ReportProgress(p), token);
+            }, "已启动安装程序，请按提示完成安装。");
+        }
+
+        private async void InstallPortable_Click(object sender, RoutedEventArgs e)
+        {
+            if (_package == null || _package.PortableUrl == null)
+            {
+                Ui.Warn("没有可用的便携版信息，请先刷新版本。");
+                return;
+            }
+
+            if (!Ui.Confirm("将下载图吧工具箱CE 便携版（" + Native.FormatBytes(_package.PortableSize) +
+                            "）并解压到本机用户目录。\r\n\r\n继续吗？"))
+            {
+                return;
+            }
+
+            await DownloadAsync(async (progress, token) =>
+            {
+                DownloadText.Text = "正在下载便携版…";
+                var target = await TubaInstaller.DownloadAndExtractPortableAsync(_package,
+                    p => ReportProgress(p), token);
+                return target != null;
+            }, null, true);
+        }
+
+        private async Task DownloadAsync(Func<object, CancellationToken, Task<bool>> action,
+            string successMessage, bool rescan = false)
+        {
+            if (_downloading)
+            {
+                return;
+            }
+
+            _downloading = true;
+            _downloadCts = new CancellationTokenSource();
+            SetupButton.IsEnabled = false;
+            PortableButton.IsEnabled = false;
+            CancelButton.Visibility = Visibility.Visible;
+            DownloadBar.Visibility = Visibility.Visible;
+            DownloadBar.Value = 0;
+            DownloadText.Text = "准备下载…";
+
+            try
+            {
+                var ok = await action(null, _downloadCts.Token);
+                if (ok)
+                {
+                    DownloadBar.Value = 100;
+                    DownloadText.Text = "完成";
+                    if (!string.IsNullOrEmpty(successMessage))
+                    {
+                        Ui.Info(successMessage);
+                    }
+
+                    if (rescan)
+                    {
+                        DetectAndScan();
+                    }
+                }
+                else
+                {
+                    DownloadText.Text = "操作失败或被取消。";
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                DownloadText.Text = "已取消下载。";
+            }
+            catch (Exception ex)
+            {
+                DownloadText.Text = "操作失败：" + ex.Message;
+            }
+            finally
+            {
+                _downloading = false;
+                _downloadCts?.Dispose();
+                _downloadCts = null;
+                CancelButton.Visibility = Visibility.Collapsed;
+                DownloadBar.Visibility = Visibility.Collapsed;
+                SetupButton.IsEnabled = _package?.SetupUrl != null;
+                PortableButton.IsEnabled = _package?.PortableUrl != null;
+            }
+        }
+
+        private void ReportProgress(DownloadProgress progress)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                DownloadBar.Value = progress.Percent;
+                DownloadText.Text = progress.SizeText + " · " + progress.SpeedText +
+                                    (string.IsNullOrEmpty(progress.EtaText) ? "" : " · 剩余 " + progress.EtaText);
+            }));
+        }
+
+        private void CancelDownload_Click(object sender, RoutedEventArgs e)
+        {
+            _downloadCts?.Cancel();
         }
     }
 }

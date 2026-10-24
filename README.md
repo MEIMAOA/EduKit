@@ -7,7 +7,7 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20SP1%2B-0078D4)](#兼容性说明)
 [![.NET](https://img.shields.io/badge/.NET%20Framework-4.6.2%2B-512BD4)](https://dotnet.microsoft.com/download/dotnet-framework)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
-[![Release](https://img.shields.io/badge/release-v1.1.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
+[![Release](https://img.shields.io/badge/release-v1.2.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
 [![Build](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml/badge.svg)](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml)
 
 ![系统概览](docs/shots/light-dashboard.png)
@@ -23,7 +23,7 @@
 - **启动与服务**：注册表启动项、启动文件夹、Windows 服务启动/停止/重启；
 - **系统维护**：磁盘空间、缓存清理（临时文件 / 缩略图 / 错误报告 / 回收站 / Windows 更新缓存）、SFC / DISM / 网络重置 / 系统还原 / 事件查看器 / 蓝屏转储；
 - **屏幕坏点测试**：全屏纯色循环，检查投影仪、显示器的坏点与色彩；
-- **图吧工具箱集成**：自动检测本机图吧工具箱（图拉丁吧工具箱）目录，按分类列出其中的工具并一键启动，也可手动选择目录或打开官网；
+- **图吧工具箱集成**：自动检测本机已安装的图吧工具箱，按分类列出工具并一键启动；支持**在程序内自动下载安装 / 更新图吧工具箱CE**（GitHub 开源版，GPL-3.0），也可手动选择目录或打开官网；
 - **触控优化**：手指上下滑动支持惯性滚动，鼠标滚轮 / 触控板双指滑动改为平滑动画，长列表使用像素滚动。
 
 ---
@@ -55,7 +55,7 @@
 | 🖥 显示与投影 | 分辨率 / 刷新率 / 色深 / 显示器数量、复制 / 扩展 / 仅电脑 / 仅投影、分辨率切换（15 秒自动还原保护）、关闭显示器、**屏幕坏点测试**、打开显示设置 |
 | 🔊 音量控制 | 系统主音量（Core Audio）、静音、20/50/80/100% 预设、上一首 / 播放暂停 / 下一首 / 停止、音量合成器、测试提示音 |
 | 🔌 电源管理 | 关机 / 重启 / 注销 / 睡眠 / 锁屏 / 关闭显示器（全部二次确认）、定时关机 / 重启 / 取消定时、倒计时显示 |
-| 🚀 图吧工具箱 | 自动检测本机图吧工具箱、按分类列出工具（CPU-Z / AIDA64 / HWiNFO / CrystalDiskInfo / DiskGenius / FurMark / Prime95 等）、一键启动、手动选择目录、打开官网（https://www.tbtool.cn/） |
+| 🚀 图吧工具箱 | 自动检测本机图吧工具箱、按分类列出工具（CPU-Z / AIDA64 / HWiNFO / CrystalDiskInfo / DiskGenius / FurMark / Prime95 等）、一键启动、**自动下载安装 / 更新图吧工具箱CE**、手动选择目录、打开官网（https://www.tbtool.cn/） |
 | ⚙ 设置与关于 | 亮/暗主题、开机自启（注册表 Run，免管理员）、打开数据目录、恢复默认设置、检查更新（GitHub Releases）、开源协议信息 |
 
 ---
@@ -110,7 +110,7 @@ Windows 7 到 Windows 11 的触屏设备、触控板都能获得一致的顺滑�
 
 ## 快速开始
 
-1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.1.0.zip`；
+1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.2.0.zip`；
 2. 解压到任意目录（建议不要放在 `C:\Program Files`，避免权限问题）；
 3. 双击 `EduKit.exe` 运行。
 
@@ -145,11 +145,11 @@ cd EduKit
 # 编译（Debug / Release）
 dotnet build EduKit.sln -c Release
 
-# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.1.0.zip）
+# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.2.0.zip）
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.1.0.zip`。
+构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.2.0.zip`。
 
 ### 自检与截图模式
 
@@ -216,6 +216,12 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 **Q：图吧工具箱显示"未检测到"？**
 程序会在常见位置自动查找，如果放在自定义位置，请到「图吧工具箱」页面点击「选择目录」手动指定，目录选到包含 `图吧工具箱20xx` 文件夹的外层目录即可。也可以直接从官网 [https://www.tbtool.cn/](https://www.tbtool.cn/) 下载安装。
 
+**Q：自动下载安装图吧工具箱失败？**
+请确认网络可以访问 GitHub（github.com / pi.github.com）。如果网络受限，可点击「发布页」手动下载，或在原版官网（https://www.tbtool.cn/）使用网盘下载。下载约 300 MB，请预留磁盘空间。
+
+**Q：自动更新 EduKit 失败？**
+自动更新需要程序目录可写（不要把程序放在 Program Files），且需要能访问 GitHub。更新失败时不会影响当前版本运行；可以到 Releases 页面手动下载最新 zip 覆盖。
+
 **Q：清理或服务操作提示需要管理员权限？**
 涉及系统目录、Windows 更新缓存、系统服务的操作需要管理员权限，点击时选择"是"即可提权；浏览类功能不需要管理员权限。
 
@@ -229,6 +235,13 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 程序不做任何联网上传、不修改系统关键项，源码完全公开可审计。个别杀软对未知小工具敏感，可将 EduKit 目录加入信任列表。
 
 ## 更新日志
+
+### v1.2.0（2026-10-23）
+
+- 新增**图吧工具箱自动下载安装 / 更新**：从 GitHub Releases 获取图吧工具箱CE 最新版，支持安装版与便携版，带下载进度 / 速度 / 剩余时间与取消；
+- 新增**EduKit 自动更新**：启动时自动检查、可开启自动下载安装、手动检查 / 立即更新，更新包 SHA256 校验后自动替换并重启；
+- 设置页新增更新策略开关；图吧工具箱页面新增在线版本检测；
+- 修复设置页副标题残留的旧功能描述；版本号 1.2.0，自检与截图更新。
 
 ### v1.1.0（2026-10-23）
 
@@ -252,7 +265,7 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 
 ## English Summary
 
-EduKit is a lightweight, professional Windows system toolbox for class IT/AV committee members and PC maintenance. It provides a system overview, detailed hardware inventory (CPU, memory modules, motherboard/BIOS, GPU, disks, device problems, activation), process manager, startup items and Windows services, system maintenance (cleanup, SFC/DISM, network reset), network diagnostics, display/projector control with a dead-pixel test, volume control and power management. It also detects a locally installed TuBa Toolbox (图吧工具箱) and launches its tools without redistributing them. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme. Touch scrolling uses inertial panning and a custom smooth scroller. No third-party packages. Released under the PolyForm Noncommercial License 1.0.0: free for personal, educational and other noncommercial use, commercial use requires a separate license.
+EduKit is a lightweight, professional Windows system toolbox for class IT/AV committee members and PC maintenance. It provides a system overview, detailed hardware inventory (CPU, memory modules, motherboard/BIOS, GPU, disks, device problems, activation), process manager, startup items and Windows services, system maintenance (cleanup, SFC/DISM, network reset), network diagnostics, display/projector control with a dead-pixel test, volume control and power management. It also detects a locally installed TuBa Toolbox (图吧工具箱), launches its tools without redistributing them, and can automatically download/install or update the community edition (图吧工具箱CE) from its GitHub Releases. EduKit can also self-update from its own GitHub Releases with SHA256 verification. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme. Touch scrolling uses inertial panning and a custom smooth scroller. No third-party packages. Released under the PolyForm Noncommercial License 1.0.0: free for personal, educational and other noncommercial use, commercial use requires a separate license.
 
 ## 开源协议
 
