@@ -280,3 +280,7 @@ EduKit is a lightweight, professional Windows system toolbox for class IT/AV com
 > 说明：v1.0.0 曾以 MIT 协议发布，已经分发的 v1.0.0 副本仍适用 MIT；自 v1.0.1 起采用上述非商业许可。
 
 欢迎 Star、Issue、PR。
+
+## 参与贡献
+
+欢迎参与！详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
