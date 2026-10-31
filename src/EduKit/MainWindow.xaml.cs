@@ -62,6 +62,7 @@ namespace EduKit
             _navItems.Add(new NavItem("dashboard", "系统概览", "IconHome"));
             _navItems.Add(new NavItem("hardware", "硬件信息", "IconSystem"));
             _navItems.Add(new NavItem("processes", "进程管理", "IconList"));
+            _navItems.Add(new NavItem("performance", "性能监控", "IconChart"));
             _navItems.Add(new NavItem("startup", "启动与服务", "IconRefresh"));
             _navItems.Add(new NavItem("system", "系统维护", "IconWrench"));
             _navItems.Add(new NavItem("network", "网络诊断", "IconWifi"));
@@ -109,6 +110,7 @@ namespace EduKit
             {
                 case "hardware": return new HardwarePage();
                 case "processes": return new ProcessesPage();
+                case "performance": return new PerformancePage();
                 case "startup": return new StartupPage();
                 case "system": return new SystemPage();
                 case "network": return new NetworkPage();

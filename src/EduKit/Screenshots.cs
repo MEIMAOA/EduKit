@@ -15,7 +15,7 @@ namespace EduKit
     {
         private static readonly string[] Pages =
         {
-            "dashboard", "hardware", "processes", "startup", "system", "network",
+            "dashboard", "hardware", "processes", "performance", "startup", "system", "network",
             "display", "audio", "power", "tuba", "settings"
         };
 

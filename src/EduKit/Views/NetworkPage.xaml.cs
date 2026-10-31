@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Collections.Concurrent;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
@@ -195,6 +196,102 @@ namespace EduKit.Views
         {
             Native.StartQuiet("ipconfig.exe", "/flushdns");
             Append("已执行 DNS 缓存刷新。");
+        }
+
+        private async void LanScan_Click(object sender, RoutedEventArgs e)
+        {
+            var ip = NetUtil.GetLocalIPv4().FirstOrDefault();
+            if (string.IsNullOrEmpty(ip))
+            {
+                Ui.Warn("没有找到本机 IPv4 地址，无法扫描局域网。");
+                return;
+            }
+
+            var prefix = ip.Substring(0, ip.LastIndexOf('.') + 1);
+            Append("开始扫描 " + prefix + "1 - 254 …");
+            var found = new ConcurrentBag<string>();
+            await Task.Run(() =>
+            {
+                Parallel.ForEach(Enumerable.Range(1, 254),
+                    new ParallelOptions { MaxDegreeOfParallelism = 64 },
+                    i =>
+                    {
+                        try
+                        {
+                            using (var ping = new Ping())
+                            {
+                                var reply = ping.Send(prefix + i, 350);
+                                if (reply.Status == IPStatus.Success)
+                                {
+                                    found.Add(prefix + i);
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
+                    });
+            });
+
+            var list = found.OrderBy(s => int.Parse(s.Substring(s.LastIndexOf('.') + 1))).ToList();
+            Append("扫描完成，发现 " + list.Count + " 台在线设备：");
+            foreach (var address in list)
+            {
+                Append("  → " + address);
+            }
+        }
+
+        private async void Tracert_Click(object sender, RoutedEventArgs e)
+        {
+            var host = PingHost.Text.Trim();
+            if (string.IsNullOrWhiteSpace(host))
+            {
+                Ui.Warn("请输入要跟踪路由的地址。");
+                return;
+            }
+
+            Append("路由跟踪 " + host + " …");
+            await Task.Run(() =>
+            {
+                try
+                {
+                    using (var process = new System.Diagnostics.Process())
+                    {
+                        process.StartInfo = new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = "tracert.exe",
+                            Arguments = "-d " + host,
+                            RedirectStandardOutput = true,
+                            UseShellExecute = false,
+                            CreateNoWindow = true
+                        };
+                        process.Start();
+                        string line;
+                        while ((line = process.StandardOutput.ReadLine()) != null)
+                        {
+                            var text = line;
+                            Dispatcher.BeginInvoke(new Action(() => Append(text)));
+                        }
+
+                        process.WaitForExit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.BeginInvoke(new Action(() => Append("跟踪失败：" + ex.Message)));
+                }
+            });
+        }
+
+        private void Hosts_Click(object sender, RoutedEventArgs e)
+        {
+            var hosts = System.IO.Path.Combine(Environment.SystemDirectory, "drivers", "etc", "hosts");
+            string error;
+            if (!Elevation.RunAsAdmin("notepad.exe", "\"" + hosts + "\"", out error))
+            {
+                Ui.Warn("编辑 hosts 需要管理员权限，提权失败：" + error);
+            }
         }
     }
 }

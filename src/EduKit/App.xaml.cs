@@ -14,7 +14,7 @@ namespace EduKit
 
         public static MainWindow Shell { get; private set; }
 
-        public static string Version => "1.2.0";
+        public static string Version => "1.3.0";
 
         public static string ProjectUrl => "https://github.com/MEIMAOA/EduKit";
 
@@ -30,7 +30,7 @@ namespace EduKit
             _mutex = new Mutex(true, "EduKit.SingleInstance", out createdNew);
             if (!createdNew)
             {
-                MessageBox.Show("「电教委工具箱」已经在运行了。", "EduKit", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("「系统工具箱 SysKit」已经在运行了。", "SysKit", MessageBoxButton.OK, MessageBoxImage.Information);
                 Shutdown();
                 return;
             }

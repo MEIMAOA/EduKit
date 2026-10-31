@@ -5,7 +5,7 @@ namespace EduKit.Core
     /// <summary>简单的对话框封装。</summary>
     public static class Ui
     {
-        private const string Title = "电教委工具箱";
+        private const string Title = "系统工具箱 SysKit";
 
         public static void Info(string message)
         {

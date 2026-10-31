@@ -1,0 +1,36 @@
+<UserControl x:Class="EduKit.Views.PerformancePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,14">
+            <StackPanel>
+                <TextBlock Text="性能监控" Style="{StaticResource H1}" />
+                <TextBlock Text="实时监控 CPU、内存、磁盘与网络（数据来自 Windows 性能计数器）"
+                           Style="{StaticResource Sub}" Margin="0,5,0,0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock x:Name="CounterHint" Text="" Style="{StaticResource Caption}" VerticalAlignment="Center" />
+                <Button Content="重置曲线" Style="{StaticResource BtnSmall}" Margin="12,0,0,0"
+                        Click="Reset_Click" />
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="ChartGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="14" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="14" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -74,6 +74,12 @@
                                     Click="OpenAdapter_Click" />
                             <Button Content="刷新 DNS 缓存" Style="{StaticResource BtnSmall}" Margin="0,0,8,8"
                                     Click="FlushDns_Click" />
+                            <Button Content="局域网扫描" Style="{StaticResource BtnSmall}" Margin="0,0,8,8"
+                                    Click="LanScan_Click" />
+                            <Button Content="路由跟踪" Style="{StaticResource BtnSmall}" Margin="0,0,8,8"
+                                    Click="Tracert_Click" />
+                            <Button Content="编辑 hosts" Style="{StaticResource BtnSmall}" Margin="0,0,8,8"
+                                    Click="Hosts_Click" />
                         </WrapPanel>
                     </StackPanel>
                 </Border>

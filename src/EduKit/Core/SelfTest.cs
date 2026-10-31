@@ -105,6 +105,20 @@ namespace EduKit
                     lines.Add("SKIP  枚举分辨率  -> 当前环境没有可用的显示模式");
                 }
 
+                try
+                {
+                    using (var cpu = new System.Diagnostics.PerformanceCounter("Processor", "% Processor Time", "_Total"))
+                    {
+                        cpu.NextValue();
+                        cpu.NextValue();
+                        lines.Add("PASS  性能计数器  -> 可用");
+                    }
+                }
+                catch
+                {
+                    lines.Add("SKIP  性能计数器  -> 不可用（可在系统里启用性能计数器）");
+                }
+
                 var volume = AudioManager.GetVolume();
                 lines.Add((volume >= 0 ? "PASS" : "SKIP") + "  系统音量读取  -> " +
                           (volume >= 0 ? volume + "%" : "无音频设备或不可读"));

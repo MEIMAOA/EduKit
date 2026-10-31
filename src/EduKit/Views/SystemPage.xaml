@@ -116,6 +116,43 @@
                                    Style="{StaticResource Caption}" Margin="0,4,0,0" TextWrapping="Wrap" />
                     </StackPanel>
                 </Border>
+                <Border Style="{StaticResource Card}" Margin="0,14,0,0">
+                    <StackPanel>
+                        <TextBlock Text="系统工具与优化" Style="{StaticResource SectionTitle}" />
+                        <WrapPanel>
+                            <Button Content="注册表编辑器" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8"
+                                    Click="Regedit_Click" />
+                            <Button Content="任务计划程序" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8"
+                                    Click="Taskschd_Click" />
+                            <Button Content="本地组策略" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8"
+                                    Click="Gpedit_Click" />
+                            <Button Content="环境变量" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8"
+                                    Click="EnvVars_Click" />
+                            <Button Content="性能选项" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8"
+                                    Click="PerfOptions_Click" />
+                            <Button Content="用户账户" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8"
+                                    Click="Accounts_Click" />
+                            <Button Content="电源选项" Style="{StaticResource BtnSecondary}" Margin="0,0,8,8"
+                                    Click="PowerOptions_Click" />
+                        </WrapPanel>
+
+                        <TextBlock Text="电源计划" Style="{StaticResource H3}" Margin="0,14,0,8" />
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="切换到平衡" Style="{StaticResource BtnSmall}" Click="Balanced_Click" />
+                            <Button Content="切换到高性能" Style="{StaticResource BtnSmall}" Margin="8,0,0,0"
+                                    Click="HighPerf_Click" />
+                        </StackPanel>
+
+                        <TextBlock Text="系统报告" Style="{StaticResource H3}" Margin="0,14,0,8" />
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="导出系统报告" Style="{StaticResource BtnSmall}" Click="ExportReport_Click" />
+                            <Button Content="生成电池报告" Style="{StaticResource BtnSmall}" Margin="8,0,0,0"
+                                    Click="BatteryReport_Click" />
+                            <Button Content="创建还原点" Style="{StaticResource BtnSmall}" Margin="8,0,0,0"
+                                    Click="RestorePoint_Click" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </controls:SmoothScrollViewer>
     </Grid>

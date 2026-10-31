@@ -1,13 +1,13 @@
-# 电教委工具箱 · EduKit
+# 系统工具箱 · SysKit
 
-> 面向班级电教委员（电教委）与电脑维护人员的 Windows **专业系统工具箱**：系统概览、硬件信息、进程管理、启动项与服务、系统维护、网络诊断、显示与投影、音量、电源、屏幕测试，并集成图吧工具箱入口。
+> 面向验机、装机与电脑维护的 Windows **专业系统工具箱**：系统概览、硬件信息、进程管理、启动项与服务、系统维护、网络诊断、显示与投影、音量、电源、屏幕测试，并集成图吧工具箱入口。
 >
 > 支持 **Windows 7 SP1 / 8 / 8.1 / 10 / 11**，32 位 / 64 位，UTF-8 中文界面，非商业许可开源（PolyForm Noncommercial 1.0.0，禁止商业使用）。
 
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20SP1%2B-0078D4)](#兼容性说明)
 [![.NET](https://img.shields.io/badge/.NET%20Framework-4.6.2%2B-512BD4)](https://dotnet.microsoft.com/download/dotnet-framework)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
-[![Release](https://img.shields.io/badge/release-v1.2.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
+[![Release](https://img.shields.io/badge/release-v1.3.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
 [![Build](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml/badge.svg)](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml)
 
 ![系统概览](docs/shots/light-dashboard.png)
@@ -50,8 +50,9 @@
 | 🔧 硬件信息 | 完整配置（系统、CPU 核心线程/主频/缓存/插槽、内存条容量/频率/品牌/型号、主板/BIOS、显卡与驱动日期、电池）、磁盘型号与健康、有问题的设备、一键复制 |
 | 📋 进程管理 | 进程列表（名称 / PID / 内存 / 公司 / 路径）、搜索、结束进程（二次确认）、打开文件位置 |
 | ⚙ 启动与服务 | 开机启动项（HKLM / HKCU / 32 位 / 启动文件夹）、删除启动项、任务管理器 / msconfig 入口、Windows 服务列表（状态 / 启动类型）、启动 / 停止 / 重启服务 |
-| 🧹 系统维护 | 磁盘空间与型号、缓存与垃圾清理（安全项一键清理、含管理员项、磁盘清理）、SFC、DISM、重置网络、刷新 DNS、系统还原、事件查看器、蓝屏转储目录、设备管理器、服务管理、系统信息 |
-| 📶 网络诊断 | 网卡 / IP / MAC / 网关 / 速率、Ping（次数、平均/最小/最大延迟）、DNS 解析、TCP 端口连通性、复制本机 IP、打开网络连接、刷新 DNS 缓存 |
+| 📈 性能监控 | 实时 CPU 使用率、内存使用率、磁盘活动、网络吞吐曲线图（来自 Windows 性能计数器），采样周期 1 秒，可重置曲线 |
+| 🧹 系统维护 | 磁盘空间与型号、缓存与垃圾清理、SFC、DISM、重置网络、系统还原、事件查看器、蓝屏转储、**注册表/组策略/任务计划/环境变量/账户/电源选项入口**、**电源计划切换**、**导出系统报告**、**电池报告**、**创建还原点** |
+| 📶 网络诊断 | 网卡 / IP / MAC / 网关 / 速率、Ping、DNS 解析、TCP 端口连通性、**局域网扫描**（发现在线设备）、**路由跟踪 tracert**、**编辑 hosts**、复制本机 IP、刷新 DNS 缓存 |
 | 🖥 显示与投影 | 分辨率 / 刷新率 / 色深 / 显示器数量、复制 / 扩展 / 仅电脑 / 仅投影、分辨率切换（15 秒自动还原保护）、关闭显示器、**屏幕坏点测试**、打开显示设置 |
 | 🔊 音量控制 | 系统主音量（Core Audio）、静音、20/50/80/100% 预设、上一首 / 播放暂停 / 下一首 / 停止、音量合成器、测试提示音 |
 | 🔌 电源管理 | 关机 / 重启 / 注销 / 睡眠 / 锁屏 / 关闭显示器（全部二次确认）、定时关机 / 重启 / 取消定时、倒计时显示 |
@@ -110,7 +111,7 @@ Windows 7 到 Windows 11 的触屏设备、触控板都能获得一致的顺滑�
 
 ## 快速开始
 
-1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.2.0.zip`；
+1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.3.0.zip`；
 2. 解压到任意目录（建议不要放在 `C:\Program Files`，避免权限问题）；
 3. 双击 `EduKit.exe` 运行。
 
@@ -145,11 +146,11 @@ cd EduKit
 # 编译（Debug / Release）
 dotnet build EduKit.sln -c Release
 
-# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.2.0.zip）
+# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.3.0.zip）
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.2.0.zip`。
+构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.3.0.zip`。
 
 ### 自检与截图模式
 
@@ -236,6 +237,13 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 
 ## 更新日志
 
+### v1.3.0（2026-10-24）
+
+- **产品更名**：由「电教委工具箱」更名为「系统工具箱 SysKit」，定位专业系统维护；
+- 新增**性能监控**：实时 CPU / 内存 / 磁盘 / 网络曲线图（Windows 性能计数器）；
+- 网络诊断增强：新增**局域网扫描**（发现在线设备）、**路由跟踪 tracert**、**编辑 hosts**；
+- 系统维护增强：新增注册表 / 组策略 / 任务计划 / 环境变量 / 账户 / 电源选项入口、**电源计划切换**、**导出系统报告**、**生成电池报告**、**创建还原点**。
+
 ### v1.2.0（2026-10-23）
 
 - 新增**图吧工具箱自动下载安装 / 更新**：从 GitHub Releases 获取图吧工具箱CE 最新版，支持安装版与便携版，带下载进度 / 速度 / 剩余时间与取消；
@@ -265,7 +273,7 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 
 ## English Summary
 
-EduKit is a lightweight, professional Windows system toolbox for class IT/AV committee members and PC maintenance. It provides a system overview, detailed hardware inventory (CPU, memory modules, motherboard/BIOS, GPU, disks, device problems, activation), process manager, startup items and Windows services, system maintenance (cleanup, SFC/DISM, network reset), network diagnostics, display/projector control with a dead-pixel test, volume control and power management. It also detects a locally installed TuBa Toolbox (图吧工具箱), launches its tools without redistributing them, and can automatically download/install or update the community edition (图吧工具箱CE) from its GitHub Releases. EduKit can also self-update from its own GitHub Releases with SHA256 verification. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme. Touch scrolling uses inertial panning and a custom smooth scroller. No third-party packages. Released under the PolyForm Noncommercial License 1.0.0: free for personal, educational and other noncommercial use, commercial use requires a separate license.
+SysKit is a lightweight, professional Windows system toolbox for PC diagnostics, benchmarking and maintenance. It provides a system overview, detailed hardware inventory (CPU, memory modules, motherboard/BIOS, GPU, disks, device problems, activation), process manager, startup items and Windows services, system maintenance (cleanup, SFC/DISM, network reset), network diagnostics, display/projector control with a dead-pixel test, volume control and power management. It also detects a locally installed TuBa Toolbox (图吧工具箱), launches its tools without redistributing them, and can automatically download/install or update the community edition (图吧工具箱CE) from its GitHub Releases. EduKit can also self-update from its own GitHub Releases with SHA256 verification. It targets **.NET Framework 4.6.2** so it runs on **Windows 7 SP1 / 8 / 8.1 / 10 / 11**. WinUI 3 and WinUI 2 cannot run on Windows 7, so EduKit uses WPF with a hand-written WinUI/Fluent-style theme. Touch scrolling uses inertial panning and a custom smooth scroller. No third-party packages. Released under the PolyForm Noncommercial License 1.0.0: free for personal, educational and other noncommercial use, commercial use requires a separate license.
 
 ## 开源协议
 
