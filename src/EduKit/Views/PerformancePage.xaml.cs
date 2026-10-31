@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.IO;
 using EduKit.Core;
 
 namespace EduKit.Views
@@ -95,6 +96,59 @@ namespace EduKit.Views
             foreach (var chart in _charts)
             {
                 chart.Clear();
+            }
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            if (_charts.Count == 0)
+            {
+                return;
+            }
+
+            var max = _charts.Max(c => c.History.Count);
+            if (max == 0)
+            {
+                Ui.Info("还没有采样数据，请稍候再导出。");
+                return;
+            }
+
+            try
+            {
+                var builder = new System.Text.StringBuilder();
+                builder.Append("采样");
+                foreach (var chart in _charts)
+                {
+                    builder.Append(",").Append(chart.Title);
+                }
+
+                builder.AppendLine();
+                for (var i = 0; i < max; i++)
+                {
+                    builder.Append(i + 1);
+                    foreach (var chart in _charts)
+                    {
+                        builder.Append(",");
+                        if (i < chart.History.Count)
+                        {
+                            builder.Append(chart.History[i].ToString("0.##"));
+                        }
+                    }
+
+                    builder.AppendLine();
+                }
+
+                var path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    "SysKit性能记录-" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv");
+                File.WriteAllText(path, builder.ToString(), System.Text.Encoding.UTF8);
+                if (Ui.Confirm("性能历史已导出到：\r\n" + path + "\r\n\r\n要立即打开吗？"))
+                {
+                    Native.Start(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                Ui.Error("导出失败：" + ex.Message);
             }
         }
 
@@ -212,16 +266,22 @@ namespace EduKit.Views
         private readonly bool _fixedScale;
         private readonly Func<double, string> _format;
         private readonly List<double> _history = new List<double>();
+        private readonly string _title;
         private readonly TextBlock _valueText;
         private readonly Polyline _line;
         private readonly Canvas _canvas;
 
         public PerformanceCounter Reader => _counter;
 
+        public string Title => _title;
+
+        public IReadOnlyList<double> History => _history;
+
         public PerfChart(string title, PerformanceCounter counter, Func<double, double?> transform,
             bool fixedScale, Func<double, string> format)
         {
             _counter = counter;
+            _title = title;
             _transform = transform;
             _fixedScale = fixedScale;
             _format = format;

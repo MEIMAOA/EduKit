@@ -75,6 +75,41 @@
                     </StackPanel>
                 </Border>
 
+                <Border Style="{StaticResource Card}" Margin="0,0,0,14">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,8">
+                            <TextBlock Text="SMART 硬盘健康" Style="{StaticResource SectionTitle}" Margin="0" />
+                            <TextBlock Text="需要管理员权限" Style="{StaticResource Caption}" HorizontalAlignment="Right" />
+                        </Grid>
+                        <ItemsControl x:Name="SmartList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,0,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="110" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Label}" Style="{StaticResource Body}"
+                                                   TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Grid.Column="1" Text="{Binding TempText}" Style="{StaticResource Body}" />
+                                        <TextBlock Grid.Column="2" Text="{Binding HoursText}" Style="{StaticResource Body}" />
+                                        <TextBlock Grid.Column="3" Text="{Binding ReallocText}" Style="{StaticResource Body}" />
+                                        <Border Grid.Column="4" Style="{StaticResource Chip}"
+                                                Background="{DynamicResource SuccessSoft}">
+                                            <TextBlock Text="正常" FontSize="10" Foreground="{DynamicResource Success}" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock x:Name="NoSmartText" Text="未读取到 SMART 数据（磁盘不支持、或需要以管理员身份运行）。"
+                                   Style="{StaticResource Caption}" TextWrapping="Wrap" Visibility="Collapsed" />
+                    </StackPanel>
+                </Border>
+
                 <Border Style="{StaticResource Card}">
                     <StackPanel>
                         <TextBlock Text="有问题的设备" Style="{StaticResource SectionTitle}" />

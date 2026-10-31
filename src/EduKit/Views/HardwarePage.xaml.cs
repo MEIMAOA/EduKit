@@ -34,6 +34,10 @@ namespace EduKit.Views
                 InfoList.ItemsSource = _info;
                 DiskList.ItemsSource = await Task.Run(() => HardwareDetails.GetDisks());
 
+                var smart = await Task.Run(() => HardwareDetails.GetSmartDisks());
+                SmartList.ItemsSource = smart;
+                NoSmartText.Visibility = smart.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+
                 var devices = await Task.Run(() => HardwareDetails.GetProblemDevices());
                 DeviceList.ItemsSource = devices;
                 NoDeviceText.Visibility = devices.Count == 0 ? Visibility.Visible : Visibility.Collapsed;

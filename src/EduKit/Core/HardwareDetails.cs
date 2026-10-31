@@ -42,6 +42,27 @@ namespace EduKit.Core
         public string Error { get; set; }
     }
 
+    public class SmartDisk
+    {
+        public string Label { get; set; }
+
+        public int? Temperature { get; set; }
+
+        public long? PowerOnHours { get; set; }
+
+        public long? ReallocatedSectors { get; set; }
+
+        public bool PredictFailure { get; set; }
+
+        public bool Healthy => !PredictFailure;
+
+        public string TempText => Temperature.HasValue ? Temperature + " °C" : "—";
+
+        public string HoursText => PowerOnHours.HasValue ? PowerOnHours.Value + " 小时" : "—";
+
+        public string ReallocText => ReallocatedSectors.HasValue ? ReallocatedSectors.Value.ToString() : "—";
+    }
+
     /// <summary>专业硬件信息读取（WMI / 注册表 / Win32），全部只读，不需要管理员权限。</summary>
     public static class HardwareDetails
     {
@@ -231,6 +252,112 @@ namespace EduKit.Core
             }
 
             return list;
+        }
+
+        /// <summary>SMART 健康信息（root\WMI，通常需要管理员权限）。</summary>
+        public static List<SmartDisk> GetSmartDisks()
+        {
+            var list = new List<SmartDisk>();
+            try
+            {
+                var predictions = new Dictionary<string, bool>();
+                using (var searcher = new ManagementObjectSearcher("root\\WMI",
+                           "SELECT InstanceName, PredictFailure FROM MSStorageDriver_FailurePredictStatus"))
+                {
+                    foreach (var item in searcher.Get())
+                    {
+                        var name = Text(item["InstanceName"]);
+                        bool failure;
+                        if (bool.TryParse(Text(item["PredictFailure"]), out failure))
+                        {
+                            predictions[ShortName(name)] = failure;
+                        }
+                    }
+                }
+
+                using (var searcher = new ManagementObjectSearcher("root\\WMI",
+                           "SELECT InstanceName, VendorSpecific FROM MSStorageDriver_ATAPISmartData"))
+                {
+                    foreach (var item in searcher.Get())
+                    {
+                        var name = Text(item["InstanceName"]);
+                        var key = ShortName(name);
+                        var disk = new SmartDisk { Label = key };
+                        if (predictions.TryGetValue(key, out var failure))
+                        {
+                            disk.PredictFailure = failure;
+                        }
+
+                        if (item["VendorSpecific"] is byte[] raw && raw.Length > 512)
+                        {
+                            ParseSmart(raw, disk);
+                        }
+
+                        list.Add(disk);
+                    }
+                }
+
+                foreach (var prediction in predictions)
+                {
+                    if (list.All(d => d.Label != prediction.Key))
+                    {
+                        list.Add(new SmartDisk { Label = prediction.Key, PredictFailure = prediction.Value });
+                    }
+                }
+            }
+            catch
+            {
+                // 无管理员权限或 WMI 不支持时忽略
+            }
+
+            return list;
+        }
+
+        private static void ParseSmart(byte[] raw, SmartDisk disk)
+        {
+            try
+            {
+                for (var i = 2; i + 12 <= raw.Length; i += 12)
+                {
+                    var id = raw[i];
+                    var rawValue = new byte[6];
+                    Array.Copy(raw, i + 6, rawValue, 0, 6);
+
+                    switch (id)
+                    {
+                        case 5:
+                            disk.ReallocatedSectors = BitConverter.ToUInt16(rawValue, 0);
+                            break;
+                        case 9:
+                            disk.PowerOnHours = BitConverter.ToUInt32(rawValue, 0);
+                            break;
+                        case 190:
+                        case 194:
+                            var temp = rawValue[0];
+                            if (temp > 0 && temp < 150)
+                            {
+                                disk.Temperature = temp;
+                            }
+
+                            break;
+                    }
+                }
+            }
+            catch
+            {
+                // 解析失败不影响整体
+            }
+        }
+
+        private static string ShortName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return "磁盘";
+            }
+
+            var parts = name.Split('\\');
+            return parts[parts.Length - 1];
         }
 
         public static string GetActivationStatus()

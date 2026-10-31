@@ -32,7 +32,7 @@ namespace EduKit.Core
     /// <summary>应用自更新：检查 GitHub Releases → 下载新版本 zip → 校验 → 退出并替换文件后重启。</summary>
     public static class UpdateChecker
     {
-        private const string Repo = "MEIMAOA/EduKit";
+        private const string Repo = "MEIMAOA/SysKit";
 
         public static async Task<UpdateInfo> CheckAsync()
         {

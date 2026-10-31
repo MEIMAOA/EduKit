@@ -65,7 +65,7 @@
                                 <Image Source="Assets/EduKit.ico" Width="46" Height="46" />
                                 <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="系统工具箱 SysKit" Style="{StaticResource H2}" />
-                                    <TextBlock x:Name="VersionText" Text="v1.3.0" Style="{StaticResource Caption}"
+                                    <TextBlock x:Name="VersionText" Text="v1.4.0" Style="{StaticResource Caption}"
                                                Margin="0,4,0,0" />
                                 </StackPanel>
                             </StackPanel>

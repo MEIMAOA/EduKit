@@ -65,6 +65,7 @@ namespace EduKit
             _navItems.Add(new NavItem("performance", "性能监控", "IconChart"));
             _navItems.Add(new NavItem("startup", "启动与服务", "IconRefresh"));
             _navItems.Add(new NavItem("system", "系统维护", "IconWrench"));
+            _navItems.Add(new NavItem("diskanalyzer", "磁盘分析", "IconFolder"));
             _navItems.Add(new NavItem("network", "网络诊断", "IconWifi"));
             _navItems.Add(new NavItem("display", "显示与投影", "IconDisplay"));
             _navItems.Add(new NavItem("audio", "音量控制", "IconVolume"));
@@ -113,6 +114,7 @@ namespace EduKit
                 case "performance": return new PerformancePage();
                 case "startup": return new StartupPage();
                 case "system": return new SystemPage();
+                case "diskanalyzer": return new DiskAnalyzerPage();
                 case "network": return new NetworkPage();
                 case "display": return new DisplayPage();
                 case "audio": return new AudioPage();

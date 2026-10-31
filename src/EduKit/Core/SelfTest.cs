@@ -119,6 +119,18 @@ namespace EduKit
                     lines.Add("SKIP  性能计数器  -> 不可用（可在系统里启用性能计数器）");
                 }
 
+                try
+                {
+                    var smart = HardwareDetails.GetSmartDisks();
+                    lines.Add(smart.Count > 0
+                        ? "PASS  SMART 硬盘健康  -> " + smart.Count + " 块磁盘"
+                        : "SKIP  SMART 硬盘健康  -> 未读取到（磁盘不支持或需要管理员权限）");
+                }
+                catch (Exception ex)
+                {
+                    lines.Add("SKIP  SMART 硬盘健康  -> " + ex.Message);
+                }
+
                 var volume = AudioManager.GetVolume();
                 lines.Add((volume >= 0 ? "PASS" : "SKIP") + "  系统音量读取  -> " +
                           (volume >= 0 ? volume + "%" : "无音频设备或不可读"));

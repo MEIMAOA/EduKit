@@ -7,8 +7,8 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%207%20SP1%2B-0078D4)](#兼容性说明)
 [![.NET](https://img.shields.io/badge/.NET%20Framework-4.6.2%2B-512BD4)](https://dotnet.microsoft.com/download/dotnet-framework)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
-[![Release](https://img.shields.io/badge/release-v1.3.0-blue)](https://github.com/MEIMAOA/EduKit/releases)
-[![Build](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml/badge.svg)](https://github.com/MEIMAOA/EduKit/actions/workflows/build.yml)
+[![Release](https://img.shields.io/badge/release-v1.4.0-blue)](https://github.com/MEIMAOA/SysKit/releases)
+[![Build](https://github.com/MEIMAOA/SysKit/actions/workflows/build.yml/badge.svg)](https://github.com/MEIMAOA/SysKit/actions/workflows/build.yml)
 
 ![系统概览](docs/shots/light-dashboard.png)
 
@@ -47,12 +47,13 @@
 | 模块 | 主要功能 |
 | --- | --- |
 | 🏠 系统概览 | 处理器 / 内存 / 显卡 / 系统 / 运行时长、磁盘空间、设备问题、图吧工具箱状态、常用工具入口 |
-| 🔧 硬件信息 | 完整配置（系统、CPU 核心线程/主频/缓存/插槽、内存条容量/频率/品牌/型号、主板/BIOS、显卡与驱动日期、电池）、磁盘型号与健康、有问题的设备、一键复制 |
+| 🔧 硬件信息 | 完整配置（CPU / 内存条 / 主板 / BIOS / 显卡 / 电池）、磁盘型号与健康、**SMART 硬盘健康（温度 / 通电时长 / 重映射扇区，需管理员）**、有问题的设备、一键复制 |
 | 📋 进程管理 | 进程列表（名称 / PID / 内存 / 公司 / 路径）、搜索、结束进程（二次确认）、打开文件位置 |
 | ⚙ 启动与服务 | 开机启动项（HKLM / HKCU / 32 位 / 启动文件夹）、删除启动项、任务管理器 / msconfig 入口、Windows 服务列表（状态 / 启动类型）、启动 / 停止 / 重启服务 |
-| 📈 性能监控 | 实时 CPU 使用率、内存使用率、磁盘活动、网络吞吐曲线图（来自 Windows 性能计数器），采样周期 1 秒，可重置曲线 |
+| 📈 性能监控 | 实时 CPU / 内存 / 磁盘 / 网络曲线图（1 秒采样）、重置曲线、**导出历史记录为 CSV** |
+| 💾 磁盘分析 | 选择任意文件夹或磁盘，扫描**目录占用排名**与**最大的文件**（前 100 个），双击文件定位，支持取消 |
 | 🧹 系统维护 | 磁盘空间与型号、缓存与垃圾清理、SFC、DISM、重置网络、系统还原、事件查看器、蓝屏转储、**注册表/组策略/任务计划/环境变量/账户/电源选项入口**、**电源计划切换**、**导出系统报告**、**电池报告**、**创建还原点** |
-| 📶 网络诊断 | 网卡 / IP / MAC / 网关 / 速率、Ping、DNS 解析、TCP 端口连通性、**局域网扫描**（发现在线设备）、**路由跟踪 tracert**、**编辑 hosts**、复制本机 IP、刷新 DNS 缓存 |
+| 📶 网络诊断 | 网卡 / IP / MAC / 网关 / 速率、Ping、DNS、端口连通性、局域网扫描、路由跟踪、编辑 hosts |
 | 🖥 显示与投影 | 分辨率 / 刷新率 / 色深 / 显示器数量、复制 / 扩展 / 仅电脑 / 仅投影、分辨率切换（15 秒自动还原保护）、关闭显示器、**屏幕坏点测试**、打开显示设置 |
 | 🔊 音量控制 | 系统主音量（Core Audio）、静音、20/50/80/100% 预设、上一首 / 播放暂停 / 下一首 / 停止、音量合成器、测试提示音 |
 | 🔌 电源管理 | 关机 / 重启 / 注销 / 睡眠 / 锁屏 / 关闭显示器（全部二次确认）、定时关机 / 重启 / 取消定时、倒计时显示 |
@@ -111,7 +112,7 @@ Windows 7 到 Windows 11 的触屏设备、触控板都能获得一致的顺滑�
 
 ## 快速开始
 
-1. 打开 [Releases](https://github.com/MEIMAOA/EduKit/releases) 下载最新的 `EduKit-v1.3.0.zip`；
+1. 打开 [Releases](https://github.com/MEIMAOA/SysKit/releases) 下载最新的 `EduKit-v1.4.0.zip`；
 2. 解压到任意目录（建议不要放在 `C:\Program Files`，避免权限问题）；
 3. 双击 `EduKit.exe` 运行。
 
@@ -140,17 +141,17 @@ Windows 7 到 Windows 11 的触屏设备、触控板都能获得一致的顺滑�
 ### 命令
 
 ```powershell
-git clone https://github.com/MEIMAOA/EduKit.git
-cd EduKit
+git clone https://github.com/MEIMAOA/SysKit.git
+cd SysKit
 
 # 编译（Debug / Release）
 dotnet build EduKit.sln -c Release
 
-# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.3.0.zip）
+# 生成发布压缩包（Release 编译 + 打包到 dist/EduKit-v1.4.0.zip）
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.3.0.zip`。
+构建产物在 `src/EduKit/bin/Release/EduKit.exe`，发布包在 `dist/EduKit-v1.4.0.zip`。
 
 ### 自检与截图模式
 
@@ -236,6 +237,14 @@ WinUI 3 / WinUI 2 均不支持 Windows 7，详见上文说明。本项目用 WPF
 程序不做任何联网上传、不修改系统关键项，源码完全公开可审计。个别杀软对未知小工具敏感，可将 EduKit 目录加入信任列表。
 
 ## 更新日志
+
+### v1.4.0（2026-10-31）
+
+- **仓库迁移**：GitHub 仓库由 MEIMAOA/EduKit 更名为 MEIMAOA/SysKit，所有链接已迁移（旧地址 301 跳转）；
+- 性能监控新增**导出历史记录 CSV**；
+- 硬件信息新增 **SMART 硬盘健康详情**（温度 / 通电时长 / 重映射扇区 / 预测失败，需管理员权限）；
+- 新增 **磁盘分析**：目录占用排名 + 最大文件排行，双击定位；
+- 版本号 1.4.0，截图与自检更新。
 
 ### v1.3.0（2026-10-24）
 

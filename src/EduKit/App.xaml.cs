@@ -14,9 +14,9 @@ namespace EduKit
 
         public static MainWindow Shell { get; private set; }
 
-        public static string Version => "1.3.0";
+        public static string Version => "1.4.0";
 
-        public static string ProjectUrl => "https://github.com/MEIMAOA/EduKit";
+        public static string ProjectUrl => "https://github.com/MEIMAOA/SysKit";
 
         /// <summary>从任意页面跳转到指定模块。</summary>
         public static void Navigate(string key)
